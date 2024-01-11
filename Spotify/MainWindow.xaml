@@ -1,0 +1,74 @@
+﻿<Window x:Class="Spotify.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Spotify"
+        mc:Ignorable="d"
+        Title="Winamp" Height="750" Width="1300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="70*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+                <ColumnDefinition Width="60*"></ColumnDefinition>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Source="/../../../img/Winamp-logo.svg.png" HorizontalAlignment="Left"></Image>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40">Music Player</TextBlock>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+                <ColumnDefinition Width="60*"></ColumnDefinition>
+                <ColumnDefinition Width="20*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15*"></RowDefinition>
+                    <RowDefinition Height="75*"></RowDefinition>
+                    <RowDefinition Height="10*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock HorizontalAlignment="Center" Margin="0 30 0 0 " FontSize="20">Biblioteka</TextBlock>
+                <ListBox Grid.Row="1" Name="playlistList" ItemsSource="{Binding}" BorderThickness="3" BorderBrush="Gray" SelectionChanged="moveToPlaylist">
+                </ListBox>
+                <Button Grid.Row="2" Name="createNewPlaylistButton" HorizontalAlignment="Center" Width="30" Height="30" Click="CreateNewPlaylistButton_OnClick">
+                    <Image  Source="/../../../img/plus.png"></Image> 
+                </Button>
+            </Grid>
+            <Grid Grid.Column="1">
+                <TextBlock Name="songsTitle" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5 0 0"></TextBlock>
+                <ListBox Grid.Row="1" Name="songsList" ItemsSource="{Binding}" BorderThickness="3" BorderBrush="Gray" Height="450" SelectionChanged="loadSong">
+                </ListBox>
+                <Button Grid.Row="1" Name="createNewSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 50 10 0" Width="30" Height="30" Click="CreateNewSongButton_OnClick">
+                    <Image  Source="/../../../img/plus.png"></Image> 
+                </Button>
+            </Grid>
+            <Grid Grid.Column="2">
+                <TextBlock> Tu dekorator z auterem</TextBlock>
+                <Button Name="refreshButton" Height="50" Width="200" Click="RefreshButton_OnClick">Przycisk do odswiezania</Button>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="45*"></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="45*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button HorizontalAlignment="Right" Width="50" Height="50">
+                <Image  Source="/../../../img/back.png"></Image> 
+            </Button>
+            <Button Grid.Column="1" Width="50" Height="50" Name="playButton" Click="PlayButton_OnClick">
+                <Image Source="/../../../img/play.png" ></Image>
+            </Button>
+            <Button Grid.Column="2" Width="50" Height="50" HorizontalAlignment="Left">
+                <Image Source="/../../../img/next.png" Width="50"></Image>  
+            </Button>
+
+        </Grid>
+    </Grid>
+</Window>

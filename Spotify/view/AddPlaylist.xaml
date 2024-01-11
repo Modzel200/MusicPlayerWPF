@@ -1,0 +1,19 @@
+﻿<Window x:Class="Spotify.VIew.AddPlaylist"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Spotify.VIew"
+        mc:Ignorable="d"
+        Title="AddPlaylist" Height="200" Width="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"></RowDefinition>
+            <RowDefinition Height="80*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Utwórz Playliste</TextBlock>
+        <TextBlock Grid.Row="1" HorizontalAlignment="Center">Nazwa</TextBlock>
+        <TextBox Grid.Row="1" VerticalAlignment="Top" Margin="0 30 0 0" Height="30" Width="150" Name="playlistName"></TextBox>
+        <Button Grid.Row="1" Name="createPlaylistButton" Height="30" Width="50" VerticalAlignment="Bottom" Margin="0 0 0 20" Click="CreatePlaylistButton_OnClick">Utwórz</Button>
+    </Grid>
+</Window>

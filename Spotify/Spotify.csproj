@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="img\back.png" />
+      <Resource Include="img\back.png" />
+      <None Remove="img\next.png" />
+      <Resource Include="img\next.png" />
+      <None Remove="img\play.png" />
+      <Resource Include="img\play.png" />
+      <None Remove="img\stop.png" />
+      <Resource Include="img\stop.png" />
+      <None Remove="img\Winamp-logo.svg.png" />
+      <Resource Include="img\Winamp-logo.svg.png" />
+      <None Remove="img\plus.png" />
+      <Resource Include="img\plus.png" />
+    </ItemGroup>
+
+</Project>
