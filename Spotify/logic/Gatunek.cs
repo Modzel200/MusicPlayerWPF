@@ -2,7 +2,7 @@
 
 public class Gatunek
 {
-    private string nazwa;
+    public string nazwa { get; set; }
 
     public string getGatunek()
     {

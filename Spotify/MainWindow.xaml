@@ -63,7 +63,7 @@
                 <Image  Source="/../../../img/back.png"></Image> 
             </Button>
             <Button Grid.Column="1" Width="50" Height="50" Name="playButton" Click="PlayButton_OnClick">
-                <Image Source="/../../../img/play.png" ></Image>
+                <Image Name="playPauseImg" Source="/../../../img/play.png" ></Image>
             </Button>
             <Button Grid.Column="2" Width="50" Height="50" HorizontalAlignment="Left">
                 <Image Source="/../../../img/next.png" Width="50"></Image>  

@@ -9,10 +9,10 @@ namespace Spotify.VIew;
 public partial class AddPlaylist : Window
 {
     public Biblioteka biblioteka;
-    public AddPlaylist()
+    public AddPlaylist(Biblioteka biblioteka)
     {
         InitializeComponent();
-        biblioteka  = Biblioteka.GetInstance();
+        this.biblioteka = biblioteka;
     }
 
     private void CreatePlaylistButton_OnClick(object sender, RoutedEventArgs e)

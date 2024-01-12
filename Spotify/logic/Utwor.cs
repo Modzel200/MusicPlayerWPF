@@ -2,13 +2,13 @@
 
 public class Utwor
 {
-    private string tytul;
-    private Autor autorUtworu;
-    private Gatunek? gatunekUtworu;
-    private int rokWydania;
-    private string sciezka;
-    private float? dlugosc;
-    private int? odsluchania;
+    public string tytul { get; set; }
+    public Autor autorUtworu { get; set; }
+    public Gatunek? gatunekUtworu { get; set; }
+    public int rokWydania { get; set; }
+    public string sciezka { get; set; }
+    public float? dlugosc { get; set; }
+    public int? odsluchania { get; set; }
 
     public Utwor(string t, Autor a, int r, string s)
     {

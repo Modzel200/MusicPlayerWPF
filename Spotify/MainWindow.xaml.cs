@@ -1,4 +1,9 @@
 ﻿using System.ComponentModel;
+using System.IO;
+using System.IO.Packaging;
+using System.Net;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,9 +14,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
 using Spotify.logic;
 using Spotify.view;
 using Spotify.VIew;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Spotify;
 
@@ -25,11 +32,24 @@ public partial class MainWindow : Window
     public static MainWindow mainWindow;
     public Playlista playlist;
     public Utwor songToPlay;
+    public Originator originator;
+    public List<Memento> savedStates;
+    public bool isPlaying;
     public MainWindow()
     {
-        InitializeComponent();
         biblioteka = Biblioteka.GetInstance();
+        if (File.Exists("test.json"))
+        {
+            string jsonString = File.ReadAllText("test.json");
+            // var deserialized = JsonConvert<Biblioteka>(jsonString);
+            var deserialized = JsonConvert.DeserializeObject<Biblioteka>(jsonString);
+            biblioteka = deserialized;
+        }
+        InitializeComponent();
+        originator = new Originator();
+        savedStates = new List<Memento>();
         player = Player.getInstance();
+        isPlaying = false;
         refresh();
     }
 
@@ -40,23 +60,28 @@ public partial class MainWindow : Window
         {
             playlistList.Items.Add(i.getNazwa());
         }
-        
+        originator.State = JsonSerializer.Serialize<Biblioteka>(biblioteka);
+        File.WriteAllText("test.json",originator.State);
+        savedStates.Add(originator.SaveState());
     }
 
     private void CreateNewPlaylistButton_OnClick(object sender, RoutedEventArgs e)
     {
-        AddPlaylist addPlaylist = new AddPlaylist();
+        AddPlaylist addPlaylist = new AddPlaylist(biblioteka);
         addPlaylist.Show();
     }
 
     private void moveToPlaylist(object sender, SelectionChangedEventArgs e)
     {
-        songsTitle.Text = biblioteka.getPlaylista(playlistList.SelectedIndex).getNazwa();
-        songsList.Items.Clear();
-        playlist = biblioteka.getPlaylista(playlistList.SelectedIndex);
-        foreach (var i in playlist.getLista())
+        if (playlistList.SelectedIndex >= 0)
         {
-            songsList.Items.Add(i.getTytul() +" "+i.getAutor().getNazwisko());
+            songsTitle.Text = biblioteka.getPlaylista(playlistList.SelectedIndex).getNazwa();
+            songsList.Items.Clear();
+            playlist = biblioteka.getPlaylista(playlistList.SelectedIndex);
+            foreach (var i in playlist.getLista())
+            {
+                songsList.Items.Add(i.getTytul() +" "+i.getAutor().getNazwisko());
+            }
         }
     }
 
@@ -68,7 +93,6 @@ public partial class MainWindow : Window
     private void loadSong(object sender, RoutedEventArgs e)
     {
         songToPlay = playlist.getUtwor(songsList.SelectedIndex);
-        
     }
 
     private void CreateNewSongButton_OnClick(object sender, RoutedEventArgs e)
@@ -79,6 +103,19 @@ public partial class MainWindow : Window
 
     private void PlayButton_OnClick(object sender, RoutedEventArgs e)
     {
-        player.play(songToPlay.getSciezka());
+        if (isPlaying == false)
+        {
+            player.play(songToPlay.getSciezka());
+            isPlaying = true;
+            //playPauseImg.Source = "/../../../img/play.png";
+            playPauseImg.Source = new BitmapImage(new Uri(@"/img/stop.png", UriKind.Relative));
+        }
+        else
+        {
+            isPlaying = false;
+            player.stop();
+            playPauseImg.Source = new BitmapImage(new Uri(@"/img/play.png", UriKind.Relative));
+        }
+
     }
 }

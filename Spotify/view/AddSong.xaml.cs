@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using System.IO;
+using System.Security;
 using System.Windows;
 using Spotify.logic;
 
@@ -15,6 +16,9 @@ public partial class AddSong : Window
 
     private void Submit_OnClick(object sender, RoutedEventArgs e)
     {
-        _playlista.dodajUtwor(new Utwor(tytul.Text,new Autor("Robert",autor.Text),int.Parse(rok.Text),sciezka.Text));
+        string newDir = "../../../songs/";
+        File.Copy(sciezka.Text,newDir+tytul.Text+".wav");
+        _playlista.dodajUtwor(new Utwor(tytul.Text,new Autor("Robert",autor.Text),int.Parse(rok.Text),newDir+tytul.Text));
+        
     }
 }

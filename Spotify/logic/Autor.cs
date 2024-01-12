@@ -2,10 +2,10 @@
 
 public class Autor
 {
-    private string imie;
-    private string nazwisko;
-    private string? pseudonim;
-    private string? narodowocs;
+    public string imie { get; set; }
+    public string nazwisko { get; set; }
+    public string? pseudonim { get; set; }
+    public string? narodowocs { get; set; }
 
     public Autor(string i, string n)
     {

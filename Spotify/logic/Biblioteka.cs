@@ -1,16 +1,19 @@
-﻿namespace Spotify.logic;
+﻿using System.Text.Json.Serialization;
+
+namespace Spotify.logic;
 
 public class Biblioteka
 {
-    private List<Playlista> listaPlaylist;
-    private List<Album> albumy;
-    private List<Utwor> utwory;
+    public List<Playlista> listaPlaylist { get; set; }
+    public List<Album> albumy { get; set; }
+    public List<Utwor> utwory { get; set; }
 
     private Biblioteka()
     {
         listaPlaylist = new List<Playlista>();
+        albumy = new List<Album>();
+        utwory = new List<Utwor>();
     }
-
     private static Biblioteka _instance;
     public static Biblioteka GetInstance()
     {

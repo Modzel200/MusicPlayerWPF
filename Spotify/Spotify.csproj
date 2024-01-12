@@ -23,4 +23,12 @@
       <Resource Include="img\plus.png" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="songs\" />
+    </ItemGroup>
+
 </Project>

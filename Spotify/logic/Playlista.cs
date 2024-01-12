@@ -2,10 +2,10 @@
 
 public class Playlista
 {
-    private string nazwa;
-    private List<Utwor> listaUtworow;
-    private int ilosc;
-    private float dlugosc;
+    public string nazwa { get; set; }
+    public List<Utwor> listaUtworow { get; set; }
+    public int ilosc { get; set; }
+    public float dlugosc { get; set; }
 
     public Playlista(string nazwaPlaylisty)
     {

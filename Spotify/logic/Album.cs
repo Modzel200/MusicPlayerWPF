@@ -2,11 +2,15 @@
 
 public class Album
 {
-    private string nazwa;
-    private List<Utwor> listaUtworow;
-    private Autor autorAlbumu;
-    private int rokWydania;
+    public string nazwa { get; set; }
+    public List<Utwor> listaUtworow { get; set; }
+    public Autor autorAlbumu { get; set; }
+    public int rokWydania { get; set; }
 
+    public Album()
+    {
+        listaUtworow = new List<Utwor>();
+    }
     public List<Utwor> getListaUtworow()
     {
         return listaUtworow;

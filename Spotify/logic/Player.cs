@@ -4,6 +4,7 @@ namespace Spotify.logic;
 
 public class Player
 {
+    private SoundPlayer soundPlayer;
     private Player()
     {
         
@@ -22,7 +23,12 @@ public class Player
 
     public void play(string sciezka)
     {
-        SoundPlayer soundPlayer = new SoundPlayer(sciezka);
+        soundPlayer = new SoundPlayer(sciezka+".wav");
         soundPlayer.Play();
+    }
+
+    public void stop()
+    {
+        soundPlayer.Stop();
     }
 }
