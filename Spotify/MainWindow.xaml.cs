@@ -37,6 +37,7 @@ public partial class MainWindow : Window
     public bool isPlaying;
     public MainWindow()
     {
+        Playlista playProto = new Playlista("Template");
         biblioteka = Biblioteka.GetInstance();
         if (File.Exists("test.json"))
         {

@@ -1,8 +1,7 @@
 ﻿namespace Spotify.logic;
 
-public class Utwor
+public class Utwor : Prototyp
 {
-    public string tytul { get; set; }
     public Autor autorUtworu { get; set; }
     public Gatunek? gatunekUtworu { get; set; }
     public int rokWydania { get; set; }
@@ -10,16 +9,19 @@ public class Utwor
     public float? dlugosc { get; set; }
     public int? odsluchania { get; set; }
 
-    public Utwor(string t, Autor a, int r, string s)
+    public Utwor(string t, Autor a, int r, string s) : base(t)
     {
-        tytul = t;
         autorUtworu = a;
         rokWydania = r;
         sciezka = s;
     }
     public string getTytul()
     {
-        return tytul;
+        return base.nazwa;
+    }
+    public void AddPath(string path)
+    {
+        this.sciezka += path;
     }
 
     public Autor getAutor()
@@ -40,5 +42,16 @@ public class Utwor
     public int getOdsluchania()
     {
         return (int)odsluchania;
+    }
+    public override Prototyp Clone()
+    {
+        Utwor utworClone = (Utwor)MemberwiseClone();
+        utworClone.autorUtworu = new Autor(this.autorUtworu.imie, this.autorUtworu.nazwisko);
+        utworClone.gatunekUtworu = new Gatunek(this.gatunekUtworu.nazwa);
+        utworClone.rokWydania = this.rokWydania;
+        utworClone.odsluchania = this.odsluchania;
+        utworClone.sciezka = this.sciezka;
+        utworClone.dlugosc = this.dlugosc;
+        return utworClone;
     }
 }

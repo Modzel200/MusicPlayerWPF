@@ -12,7 +12,7 @@
             <RowDefinition Height="80*"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Utwórz Playliste</TextBlock>
-        <TextBlock Grid.Row="1" HorizontalAlignment="Center">Nazwa</TextBlock>
+        <TextBlock Grid.Row="1"  HorizontalAlignment="Center">Nazwa</TextBlock>
         <TextBox Grid.Row="1" VerticalAlignment="Top" Margin="0 30 0 0" Height="30" Width="150" Name="playlistName"></TextBox>
         <Button Grid.Row="1" Name="createPlaylistButton" Height="30" Width="50" VerticalAlignment="Bottom" Margin="0 0 0 20" Click="CreatePlaylistButton_OnClick">Utwórz</Button>
     </Grid>

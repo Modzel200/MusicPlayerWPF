@@ -1,13 +1,12 @@
 ﻿namespace Spotify.logic;
 
-public class Album
+public class Album : Prototyp
 {
-    public string nazwa { get; set; }
     public List<Utwor> listaUtworow { get; set; }
     public Autor autorAlbumu { get; set; }
     public int rokWydania { get; set; }
 
-    public Album()
+    public Album(string nazwa) : base(nazwa)
     {
         listaUtworow = new List<Utwor>();
     }
@@ -29,5 +28,14 @@ public class Album
     public int getRokWydania()
     {
         return rokWydania;
+    }
+
+    public override Prototyp Clone()
+    {
+        Album albumCopy = (Album)MemberwiseClone();
+        albumCopy.listaUtworow = new List<Utwor>(listaUtworow);
+        albumCopy.autorAlbumu = new Autor(this.autorAlbumu.imie, this.autorAlbumu.nazwisko);
+        albumCopy.rokWydania = this.rokWydania;
+        return (Prototyp)MemberwiseClone();
     }
 }

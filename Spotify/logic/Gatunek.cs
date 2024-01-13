@@ -1,11 +1,18 @@
 ﻿namespace Spotify.logic;
 
-public class Gatunek
+public class Gatunek : Prototyp
 {
-    public string nazwa { get; set; }
+    public Gatunek(string nazwa) : base(nazwa)
+    {
+        
+    }
 
     public string getGatunek()
     {
-        return nazwa;
+        return base.nazwa;
+    }
+    public override Prototyp Clone()
+    {
+        return (Prototyp)MemberwiseClone();
     }
 }

@@ -1,15 +1,13 @@
 ﻿namespace Spotify.logic;
 
-public class Playlista
+public class Playlista : Prototyp
 {
-    public string nazwa { get; set; }
     public List<Utwor> listaUtworow { get; set; }
     public int ilosc { get; set; }
     public float dlugosc { get; set; }
 
-    public Playlista(string nazwaPlaylisty)
+    public Playlista(string nazwaPlaylisty) : base(nazwaPlaylisty)
     {
-        nazwa = nazwaPlaylisty;
         ilosc = 0;
         dlugosc = 0;
         listaUtworow = new List<Utwor>();
@@ -17,7 +15,7 @@ public class Playlista
 
     public string getNazwa()
     {
-        return nazwa;
+        return base.nazwa;
     }
     public void dodajUtwor(Utwor utwor)
     {
@@ -53,6 +51,14 @@ public class Playlista
             int k = rng.Next(n--);
             (listaUtworow[n], listaUtworow[k]) = (listaUtworow[k], listaUtworow[n]);
         }
+    }
+    public override Prototyp Clone()
+    {
+        Playlista playlistaClone = (Playlista)MemberwiseClone();
+        playlistaClone.ilosc = this.ilosc;
+        playlistaClone.dlugosc = this.dlugosc;
+        playlistaClone.listaUtworow = new List<Utwor>(this.listaUtworow);
+        return playlistaClone;
     }
 
     public void wyeksportuj()

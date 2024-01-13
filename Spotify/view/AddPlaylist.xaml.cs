@@ -9,14 +9,21 @@ namespace Spotify.VIew;
 public partial class AddPlaylist : Window
 {
     public Biblioteka biblioteka;
+    private Playlista proto;
     public AddPlaylist(Biblioteka biblioteka)
     {
+        proto = new Playlista("template");
         InitializeComponent();
+        playlistName.Text = proto.getNazwa().ToString();
         this.biblioteka = biblioteka;
+        
     }
 
     private void CreatePlaylistButton_OnClick(object sender, RoutedEventArgs e)
     {
-        biblioteka.addPlaylista(new Playlista(playlistName.Text));
+        
+        Playlista input = proto.Clone() as Playlista;
+        input.nazwa = playlistName.Text;
+        biblioteka.addPlaylista(input);
     }
 }
