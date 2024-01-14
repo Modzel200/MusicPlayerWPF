@@ -47,9 +47,9 @@ public class Utwor : Prototyp
     {
         Utwor utworClone = (Utwor)MemberwiseClone();
         utworClone.autorUtworu = new Autor(this.autorUtworu.imie, this.autorUtworu.nazwisko);
-        utworClone.gatunekUtworu = new Gatunek(this.gatunekUtworu.nazwa);
+        //utworClone.gatunekUtworu = new Gatunek(this.gatunekUtworu.nazwa);
         utworClone.rokWydania = this.rokWydania;
-        utworClone.odsluchania = this.odsluchania;
+        //utworClone.odsluchania = this.odsluchania;
         utworClone.sciezka = this.sciezka;
         utworClone.dlugosc = this.dlugosc;
         return utworClone;

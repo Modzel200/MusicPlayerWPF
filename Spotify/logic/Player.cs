@@ -5,9 +5,12 @@ namespace Spotify.logic;
 public class Player
 {
     private SoundPlayer soundPlayer;
+    private Stan stan;
+    public TimeSpan CzasOdtwarzania { get; set; }
     private Player()
     {
-        
+        stan = new StanPauza();
+        CzasOdtwarzania = TimeSpan.Zero;
     }
     private static Player _player;
 
@@ -23,12 +26,13 @@ public class Player
 
     public void play(string sciezka)
     {
-        soundPlayer = new SoundPlayer(sciezka+".wav");
-        soundPlayer.Play();
+        stan = new StanOdtwarzanie();
+        soundPlayer = stan.Odtwarzaj(sciezka + ".wav", soundPlayer);
     }
 
     public void stop()
     {
-        soundPlayer.Stop();
+        stan = new StanPauza();
+        stan.Pauza(soundPlayer);
     }
-}
+} 

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Security;
 using System.Windows;
+using Microsoft.Win32;
 using Spotify.logic;
 
 namespace Spotify.view;
@@ -29,5 +30,22 @@ public partial class AddSong : Window
         File.Copy(sciezka.Text,newDir+tytul.Text+".wav");
         _playlista.dodajUtwor(utwor);
         
+    }
+
+    private void SelectFileButton_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+
+        openFileDialog.Title = "Wybierz plik";
+        openFileDialog.Filter = "Pliki dźwiękowe (*.mp3;*.wav)|*.mp3;*.wav|Wszystkie pliki (*.*)|*.*";
+        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+        bool? result = openFileDialog.ShowDialog();
+
+        if (result == true)
+        {
+            string selectedFilePath = openFileDialog.FileName;
+            sciezka.Text = selectedFilePath;
+        }
     }
 }
