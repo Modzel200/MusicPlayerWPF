@@ -29,7 +29,7 @@ public partial class AddSong : Window
         utwor.nazwa = tytul.Text;
         File.Copy(sciezka.Text,newDir+tytul.Text+".wav");
         _playlista.dodajUtwor(utwor);
-        
+        this.Close();
     }
 
     private void SelectFileButton_Click(object sender, RoutedEventArgs e)

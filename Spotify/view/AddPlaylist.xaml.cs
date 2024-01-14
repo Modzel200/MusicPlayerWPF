@@ -25,5 +25,6 @@ public partial class AddPlaylist : Window
         Playlista input = proto.Clone() as Playlista;
         input.nazwa = playlistName.Text;
         biblioteka.addPlaylista(input);
+        this.Close();
     }
 }
