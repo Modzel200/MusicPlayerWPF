@@ -76,6 +76,7 @@ public partial class MainWindow : Window
     {
         if (playlistList.SelectedIndex >= 0)
         {
+            songsList.SelectedIndex = -1;
             songsTitle.Text = biblioteka.getPlaylista(playlistList.SelectedIndex).getNazwa();
             songsList.Items.Clear();
             playlist = biblioteka.getPlaylista(playlistList.SelectedIndex);
@@ -118,5 +119,13 @@ public partial class MainWindow : Window
             playPauseImg.Source = new BitmapImage(new Uri(@"/img/play.png", UriKind.Relative));
         }
 
+    }
+
+    private void RandomSongButton_OnClick(Object sender, RoutedEventArgs e)
+    {
+        if (isPlaying == false && playlist != null)
+        {
+            playlist.wymieszaj();
+        }
     }
 }

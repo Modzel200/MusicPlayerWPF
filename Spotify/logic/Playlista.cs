@@ -28,9 +28,13 @@ public class Playlista : Prototyp
         return listaUtworow;
     }
 
-    public Utwor getUtwor(int i)
+    public Utwor? getUtwor(int i)
     {
-        return listaUtworow[i];
+        if (listaUtworow.Count > 0 && listaUtworow.Count < i)
+        {
+            return listaUtworow[i];
+        }
+        return null;
     }
     public int getIlosc()
     {

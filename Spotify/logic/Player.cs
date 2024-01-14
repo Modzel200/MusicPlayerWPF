@@ -1,5 +1,6 @@
 ﻿using System.Media;
 
+
 namespace Spotify.logic;
 
 public class Player
