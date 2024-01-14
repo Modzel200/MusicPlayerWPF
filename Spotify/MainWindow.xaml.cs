@@ -47,6 +47,7 @@ public partial class MainWindow : Window
             biblioteka = deserialized;
         }
         InitializeComponent();
+        
         originator = new Originator();
         savedStates = new List<Memento>();
         player = Player.getInstance();
@@ -62,33 +63,37 @@ public partial class MainWindow : Window
             playlistList.Items.Add(i.getNazwa());
         }
         originator.State = JsonSerializer.Serialize<Biblioteka>(biblioteka);
-        File.WriteAllText("test.json",originator.State);
+        File.WriteAllText("test.json", originator.State);
         savedStates.Add(originator.SaveState());
     }
 
     private void CreateNewPlaylistButton_OnClick(object sender, RoutedEventArgs e)
     {
         AddPlaylist addPlaylist = new AddPlaylist(biblioteka);
+        
         addPlaylist.Show();
+        addPlaylist.Closed += AddPlaylist_Closed;
+    }
+    private void AddPlaylist_Closed(object sender, EventArgs e)
+    {
+        UpdateUI();
     }
 
     private void moveToPlaylist(object sender, SelectionChangedEventArgs e)
     {
         if (playlistList.SelectedIndex >= 0)
         {
-            songsTitle.Text = biblioteka.getPlaylista(playlistList.SelectedIndex).getNazwa();
-            songsList.Items.Clear();
-            playlist = biblioteka.getPlaylista(playlistList.SelectedIndex);
-            foreach (var i in playlist.getLista())
-            {
-                songsList.Items.Add(i.getTytul() +" "+i.getAutor().getNazwisko());
-            }
-        }
-    }
 
-    private void RefreshButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        refresh();
+                songsList.SelectedIndex = -1;
+                songsTitle.Text = biblioteka.getPlaylista(playlistList.SelectedIndex).getNazwa();
+                songsList.Items.Clear();
+                playlist = biblioteka.getPlaylista(playlistList.SelectedIndex);
+                foreach (var i in playlist.getLista())
+                {
+                    songsList.Items.Add(i.getTytul() + " " + i.getAutor().getNazwisko());
+                }
+            
+        }
     }
 
     private void loadSong(object sender, RoutedEventArgs e)
@@ -99,17 +104,26 @@ public partial class MainWindow : Window
     private void CreateNewSongButton_OnClick(object sender, RoutedEventArgs e)
     {
         AddSong addSong = new AddSong(playlist);
+        addSong.Closed += addSong_Closed;
         addSong.Show();
+    }
+
+    private void addSong_Closed(object sender, EventArgs e)
+    {
+        UpdateUI();
     }
 
     private void PlayButton_OnClick(object sender, RoutedEventArgs e)
     {
         if (isPlaying == false)
         {
-            player.play(songToPlay.getSciezka());
-            isPlaying = true;
-            //playPauseImg.Source = "/../../../img/play.png";
-            playPauseImg.Source = new BitmapImage(new Uri(@"/img/stop.png", UriKind.Relative));
+            if (songToPlay != null)
+            {
+                player.play(songToPlay.getSciezka());
+                isPlaying = true;
+                //playPauseImg.Source = "/../../../img/play.png";
+                playPauseImg.Source = new BitmapImage(new Uri(@"/img/stop.png", UriKind.Relative));
+            }
         }
         else
         {
@@ -119,4 +133,45 @@ public partial class MainWindow : Window
         }
 
     }
+
+    private void RandomSongButton_OnClick(Object sender, RoutedEventArgs e)
+    {
+        if (isPlaying == false && playlist != null)
+        {
+            playlist.wymieszaj();
+        }
+    }
+
+    private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+    {
+        double newValue = e.NewValue;
+
+        player.AdjustVolume(newValue);
+    }
+
+
+
+    private void UpdateUI()
+    {
+        playlistList.Items.Clear();
+        foreach (var i in biblioteka.getPlaylisty())
+        {
+            playlistList.Items.Add(i.getNazwa());
+        }
+
+        if (playlistList.SelectedIndex >= 0)
+        {
+            
+            songsTitle.Text = biblioteka.getPlaylista(playlistList.SelectedIndex).getNazwa();
+            songsList.Items.Clear();
+            playlist = biblioteka.getPlaylista(playlistList.SelectedIndex);
+            foreach (var i in playlist.getLista())
+            {
+                songsList.Items.Add(i.getTytul() + " " + i.getAutor().getNazwisko());
+            }
+        }
+        refresh();
+
+    }
+
 }

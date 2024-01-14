@@ -1,76 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Media;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NAudio.Wave;
+using NAudio.FileFormats;
+using System;
+using System.IO;
 using System.Windows;
 
 namespace Spotify.logic
 {
-    public interface Stan
+    public interface State
     {
-        SoundPlayer Odtwarzaj(string sciezka, SoundPlayer soundPlayer);
-        void Pauza(SoundPlayer soundPlayer);
-        SoundPlayer Zatrzymaj(SoundPlayer soundPlayer);
+        WaveOutEvent Play(string filePath, WaveOutEvent waveOut);
+        void Pause(WaveOutEvent waveOut);
+        WaveOutEvent Stop(WaveOutEvent waveOut);
     }
 
-
-    class StanOdtwarzanie : Stan
+    class PlayState : State
     {
-        private SoundPlayer soundPlayer;
-        public SoundPlayer Odtwarzaj(string sciezka, SoundPlayer soundPlayer)
+        public WaveOutEvent Play(string filePath, WaveOutEvent waveOut)
         {
-            soundPlayer = new SoundPlayer(sciezka);
-            soundPlayer.Play();
-            return soundPlayer;
+            bool isMp3 = false;
+            try{
+                new AudioFileReader(filePath);
+                isMp3 = false;
+            }
+            catch
+            {
+                isMp3 = true;
+            }
+            if (isMp3)
+            {
+
+                    var audioFile = new Mp3FileReader(filePath);
+                    waveOut = new WaveOutEvent();
+                    waveOut.Init(audioFile);
+                    waveOut.Play();
+                    return waveOut;
+                
+
+            }
+            else
+            {
+                var audioFile = new AudioFileReader(filePath);
+                waveOut = new WaveOutEvent();
+                waveOut.Init(audioFile);
+                waveOut.Play();
+                return waveOut;
+            }
         }
 
-        public void Pauza(SoundPlayer soundPlayer)
+        public void Pause(WaveOutEvent waveOut)
         {
-
+            
         }
 
-        public SoundPlayer Zatrzymaj(SoundPlayer soundPlayer)
+        public WaveOutEvent Stop(WaveOutEvent waveOut)
         {
             return null;
         }
     }
 
-    class StanPauza : Stan
+    class PauseState : State
     {
-        public SoundPlayer Odtwarzaj(string sciezka, SoundPlayer soundPlayer)
+        public WaveOutEvent Play(string filePath, WaveOutEvent waveOut)
         {
             return null;
         }
 
-        public void Pauza(SoundPlayer soundPlayer)
+        public void Pause(WaveOutEvent waveOut)
         {
-            soundPlayer.Stop();
+            waveOut.Pause();
         }
 
-        public SoundPlayer Zatrzymaj(SoundPlayer soundPlayer)
+        public WaveOutEvent Stop(WaveOutEvent waveOut)
         {
             return null;
         }
     }
 
-    class StanZatrzymanie : Stan
+    class StopState : State
     {
-        public SoundPlayer Odtwarzaj(string sciezka, SoundPlayer soundPlayer)
+        public WaveOutEvent Play(string filePath, WaveOutEvent waveOut)
         {
             return null;
         }
 
-        public void Pauza(SoundPlayer soundPlayer)
+        public void Pause(WaveOutEvent waveOut)
         {
-           
+            
         }
 
-        public SoundPlayer Zatrzymaj(SoundPlayer soundPlayer)
+        public WaveOutEvent Stop(WaveOutEvent waveOut)
         {
-            soundPlayer = new SoundPlayer();
-            return soundPlayer;
+            waveOut?.Stop();
+            waveOut?.Dispose();
+            return null;
         }
     }
 }
