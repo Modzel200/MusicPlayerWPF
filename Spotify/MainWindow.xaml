@@ -53,7 +53,9 @@
             </Grid>
             <Grid Grid.Column="2">
                 <TextBlock> Tu dekorator z auterem</TextBlock>
-                <Button Name="refreshButton" Height="50" Width="200" Click="RefreshButton_OnClick">Przycisk do odswiezania</Button>
+                <TextBlock Margin="0 60 10 0"> Glosnosc</TextBlock>
+                <Slider Width="200" Margin="0 100 10 0" Minimum="0" Maximum="1" Value="{Binding Glosnosc, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" />
+
             </Grid>
         </Grid>
         <Grid Grid.Row="2">

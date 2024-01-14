@@ -1,39 +1,58 @@
-﻿using System.Media;
+﻿using NAudio.Wave;
+using System;
+using System.Windows;
 
-
-namespace Spotify.logic;
-
-public class Player
+namespace Spotify.logic
 {
-    private SoundPlayer soundPlayer;
-    private Stan stan;
-    public TimeSpan CzasOdtwarzania { get; set; }
-    private Player()
+    public class Player
     {
-        stan = new StanPauza();
-        CzasOdtwarzania = TimeSpan.Zero;
-    }
-    private static Player _player;
+        private WaveOutEvent waveOut;
+        private State state;
+        public TimeSpan PlaybackTime { get; set; }
 
-    public static Player getInstance()
-    {
-        if (_player == null)
+        private Player()
         {
-            _player = new Player();
+            state = new PauseState();
+            PlaybackTime = TimeSpan.Zero;
         }
 
-        return _player;
-    }
+        private static Player _player;
 
-    public void play(string sciezka)
-    {
-        stan = new StanOdtwarzanie();
-        soundPlayer = stan.Odtwarzaj(sciezka + ".wav", soundPlayer);
-    }
+        public static Player getInstance()
+        {
+            if (_player == null)
+            {
+                _player = new Player();
+            }
 
-    public void stop()
-    {
-        stan = new StanPauza();
-        stan.Pauza(soundPlayer);
+            return _player;
+        }
+
+        public void SetState(State newState)
+        {
+            state = newState;
+        }
+
+        public void play(string filePath)
+        {
+            state = new PlayState();
+            waveOut = state.Play(filePath, waveOut);
+        }
+
+        public void stop()
+        {
+            state = new StopState();
+            state.Stop(waveOut);
+        }
+
+        public void AdjustVolume(double glosnosc)
+        {
+            if (waveOut != null)
+            {
+ 
+                waveOut.Volume = (float)glosnosc;
+            }
+        }
+
     }
-} 
+}

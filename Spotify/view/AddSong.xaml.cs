@@ -27,17 +27,24 @@ public partial class AddSong : Window
         Utwor utwor = utworProto.Clone() as Utwor;
         utwor.AddPath(tytul.Text);
         utwor.nazwa = tytul.Text;
-        File.Copy(sciezka.Text,newDir+tytul.Text+".wav");
+
+        string originalFilePath = sciezka.Text;
+        string newFilePath = Path.Combine(newDir, Path.GetFileName(originalFilePath));
+
+        File.Copy(originalFilePath, newFilePath);
+        utwor.AddPath(newFilePath);
+
         _playlista.dodajUtwor(utwor);
         this.Close();
     }
+
 
     private void SelectFileButton_Click(object sender, RoutedEventArgs e)
     {
         OpenFileDialog openFileDialog = new OpenFileDialog();
 
         openFileDialog.Title = "Wybierz plik";
-        openFileDialog.Filter = "Pliki dźwiękowe (*.mp3;*.wav)|*.mp3;*.wav|Wszystkie pliki (*.*)|*.*";
+        openFileDialog.Filter = "Pliki dźwiękowe (*.mp3;*.wav)|*.mp3;*.wav";
         openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
         bool? result = openFileDialog.ShowDialog();

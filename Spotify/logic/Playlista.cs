@@ -30,7 +30,7 @@ public class Playlista : Prototyp
 
     public Utwor? getUtwor(int i)
     {
-        if (listaUtworow.Count > 0 && listaUtworow.Count < i)
+        if (listaUtworow.Count > 0 && i < listaUtworow.Count && i != -1)
         {
             return listaUtworow[i];
         }
