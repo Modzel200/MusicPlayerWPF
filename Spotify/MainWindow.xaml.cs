@@ -15,10 +15,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
+using System.Text.Json;
 using Spotify.logic;
 using Spotify.view;
 using Spotify.VIew;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using System.Text.Json.Serialization;
 
 namespace Spotify;
 
@@ -62,7 +64,10 @@ public partial class MainWindow : Window
         {
             playlistList.Items.Add(i.getNazwa());
         }
-        originator.State = JsonSerializer.Serialize<Biblioteka>(biblioteka);
+        originator.State = JsonSerializer.Serialize<Biblioteka>(biblioteka, new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.IgnoreCycles
+        });
         File.WriteAllText("test.json", originator.State);
         savedStates.Add(originator.SaveState());
     }
@@ -103,7 +108,7 @@ public partial class MainWindow : Window
 
     private void CreateNewSongButton_OnClick(object sender, RoutedEventArgs e)
     {
-        AddSong addSong = new AddSong(playlist);
+        AddSong addSong = new AddSong(playlist, biblioteka);
         addSong.Closed += addSong_Closed;
         addSong.Show();
     }

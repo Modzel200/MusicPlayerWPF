@@ -35,18 +35,18 @@ public partial class AddSong : Window
         if(File.Exists(sciezka.Text) && tytul.Text.Length >0 && autor.Text.Length>0 && rok.Text.Length > 0 && _playlista.listaUtworow.FirstOrDefault(x => x.nazwa == tytul.Text)==null)
         {
             string newDir = "../../../songs/";
-        Utwor utwor = utworProto.Clone() as Utwor;
-        utwor.AddPath(tytul.Text);
-        utwor.nazwa = tytul.Text;
+            Utwor utwor = utworProto.Clone() as Utwor;
+            utwor.AddPath(tytul.Text);
+            utwor.nazwa = tytul.Text;
+            utwor.autorUtworu = _autor;
+            string originalFilePath = sciezka.Text;
+            string newFilePath = Path.Combine(newDir, Path.GetFileName(originalFilePath));
 
-        string originalFilePath = sciezka.Text;
-        string newFilePath = Path.Combine(newDir, Path.GetFileName(originalFilePath));
-
-        File.Copy(originalFilePath, newFilePath);
-        utwor.AddPath(newFilePath);
-
-        _playlista.dodajUtwor(utwor);
-        this.Close();
+            File.Copy(originalFilePath, newFilePath);
+            utwor.AddPath(newFilePath);
+            _autor.dodajPiosenke(utwor);
+            _playlista.dodajUtwor(utwor);
+            this.Close();
         }
     }
     private void autor_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
