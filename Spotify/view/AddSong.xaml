@@ -20,8 +20,24 @@
         <TextBlock Grid.Row="1">Tytuł</TextBlock>
         <TextBox Grid.Row="1" Height="25" Width="200" Name="tytul"></TextBox>
 
-        <TextBlock Grid.Row="2" >Autor utworu</TextBlock>
-        <TextBox Grid.Row="2" Height="25" Width="200" Name="autor"></TextBox>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <TextBlock >Autor utworu</TextBlock>
+            <ComboBox Height="25" Width="170" Name="autor" SelectionChanged="autor_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock Text="{Binding Path=pseudonim,StringFormat='Pseudo: {0}'}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Height="30" Width="30" Click="AddAutor" Margin="5,0,0,0">
+                <Image  Source="/view/plus.png"></Image>
+            </Button>
+        </StackPanel>
+        
+        <!--<TextBox Grid.Row="2" Height="25" Width="200" Name="autor"></TextBox>-->
 
         <TextBlock Grid.Row="3" >Rok wydania</TextBlock>
         <TextBox Grid.Row="3" Height="25" Width="200" Name="rok"></TextBox>

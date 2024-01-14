@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <None Remove="img\back.png" />
+      <None Remove="view\plus.png" />
       <Resource Include="img\back.png" />
       <None Remove="img\next.png" />
       <Resource Include="img\next.png" />
@@ -21,6 +22,7 @@
       <Resource Include="img\Winamp-logo.svg.png" />
       <None Remove="img\plus.png" />
       <Resource Include="img\plus.png" />
+      <Resource Include="view\plus.png" />
     </ItemGroup>
 
     <ItemGroup>

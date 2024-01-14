@@ -46,7 +46,7 @@ public class Utwor : Prototyp
     public override Prototyp Clone()
     {
         Utwor utworClone = (Utwor)MemberwiseClone();
-        utworClone.autorUtworu = new Autor(this.autorUtworu.imie, this.autorUtworu.nazwisko);
+        utworClone.autorUtworu = new Autor(this.autorUtworu.imie, this.autorUtworu.nazwisko, this.autorUtworu.pseudonim, this.autorUtworu.narodowosc);
         //utworClone.gatunekUtworu = new Gatunek(this.gatunekUtworu.nazwa);
         utworClone.rokWydania = this.rokWydania;
         //utworClone.odsluchania = this.odsluchania;

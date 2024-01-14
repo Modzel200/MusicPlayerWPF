@@ -34,7 +34,7 @@ public class Album : Prototyp
     {
         Album albumCopy = (Album)MemberwiseClone();
         albumCopy.listaUtworow = new List<Utwor>(listaUtworow);
-        albumCopy.autorAlbumu = new Autor(this.autorAlbumu.imie, this.autorAlbumu.nazwisko);
+        albumCopy.autorAlbumu = new Autor(this.autorAlbumu.imie, this.autorAlbumu.nazwisko, this.autorAlbumu.pseudonim, this.autorAlbumu.narodowosc);
         albumCopy.rokWydania = this.rokWydania;
         return (Prototyp)MemberwiseClone();
     }

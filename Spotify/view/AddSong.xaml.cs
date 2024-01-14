@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Security;
 using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Win32;
 using Spotify.logic;
 
@@ -10,26 +11,49 @@ public partial class AddSong : Window
 {
     private Playlista _playlista;
     private Utwor utworProto;
-    public AddSong(Playlista playlista)
+    private Biblioteka _biblioteka;
+    private Autor _autor;
+    public AddSong(Playlista playlista, Biblioteka biblioteka)
     {
+        _biblioteka = biblioteka;
         InitializeComponent();
+
+        RefreshCombo();
         _playlista = playlista;
-        utworProto = new Utwor("template", new Autor("template", "template"), 996, "../../../songs/");
+        utworProto = new Utwor("template", new Autor("template", "template", "template", "template"), 996, "../../../songs/");
         tytul.Text = utworProto.getTytul();
-        autor.Text = utworProto.autorUtworu.imie +" "+ utworProto.autorUtworu.nazwisko;
         rok.Text = utworProto.rokWydania.ToString();
         sciezka.Text = utworProto.sciezka.ToString();
+    }
+    private void RefreshCombo()
+    {
+        this.autor.ItemsSource = _biblioteka.autorzy;
     }
 
     private void Submit_OnClick(object sender, RoutedEventArgs e)
     {
-        string newDir = "../../../songs/";
-        Utwor utwor = utworProto.Clone() as Utwor;
-        utwor.AddPath(tytul.Text);
-        utwor.nazwa = tytul.Text;
-        File.Copy(sciezka.Text,newDir+tytul.Text+".wav");
-        _playlista.dodajUtwor(utwor);
-        this.Close();
+        if(File.Exists(sciezka.Text) && tytul.Text.Length >0 && autor.Text.Length>0 && rok.Text.Length > 0 && _playlista.listaUtworow.FirstOrDefault(x => x.nazwa == tytul.Text)==null)
+        {
+            string newDir = "../../../songs/";
+            Utwor utwor = utworProto.Clone() as Utwor;
+            utwor.AddPath(tytul.Text);
+            utwor.nazwa = tytul.Text;
+            utwor.autorUtworu = _autor;
+            File.Copy(sciezka.Text, newDir + tytul.Text + ".wav");
+            _autor.dodajPiosenke(utwor);
+            _playlista.dodajUtwor(utwor);
+            this.Close();
+        }
+    }
+    private void autor_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        Autor selectedAutor = (Autor)autor.SelectedItem;
+        _autor = selectedAutor;
+    }
+    private void AddAutor(object sender, RoutedEventArgs e)
+    {
+        AddAutor addAutor = new AddAutor(_biblioteka);
+        addAutor.Show();
     }
 
     private void SelectFileButton_Click(object sender, RoutedEventArgs e)
@@ -37,7 +61,7 @@ public partial class AddSong : Window
         OpenFileDialog openFileDialog = new OpenFileDialog();
 
         openFileDialog.Title = "Wybierz plik";
-        openFileDialog.Filter = "Pliki dźwiękowe (*.mp3;*.wav)|*.mp3;*.wav|Wszystkie pliki (*.*)|*.*";
+        openFileDialog.Filter = "Pliki dźwiękowe (*.mp3;*.wav)|*.mp3;*.wav";
         openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
         bool? result = openFileDialog.ShowDialog();

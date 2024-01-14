@@ -21,10 +21,12 @@ public partial class AddPlaylist : Window
 
     private void CreatePlaylistButton_OnClick(object sender, RoutedEventArgs e)
     {
-        
-        Playlista input = proto.Clone() as Playlista;
-        input.nazwa = playlistName.Text;
-        biblioteka.addPlaylista(input);
-        this.Close();
+        if(playlistName.Text.Length >0 && biblioteka.listaPlaylist.FirstOrDefault(x => x.nazwa == playlistName.Text) == null)
+        {
+            Playlista input = proto.Clone() as Playlista;
+            input.nazwa = playlistName.Text;
+            biblioteka.addPlaylista(input);
+            this.Close();
+        }
     }
 }
