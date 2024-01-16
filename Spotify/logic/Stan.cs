@@ -17,33 +17,43 @@ namespace Spotify.logic
     {
         public WaveOutEvent Play(string filePath, WaveOutEvent waveOut)
         {
-            bool isMp3 = false;
-            try{
-                new AudioFileReader(filePath);
-                isMp3 = false;
-            }
-            catch
+            if (waveOut != null && waveOut.PlaybackState == PlaybackState.Paused)
             {
-                isMp3 = true;
+                waveOut.Play();
+                return waveOut;
             }
-            if (isMp3)
+            else
             {
+
+                bool isMp3;
+                try
+                {
+                    new AudioFileReader(filePath);
+                    isMp3 = false;
+                }
+                catch
+                {
+                    isMp3 = true;
+                }
+                if (isMp3)
+                {
 
                     var audioFile = new Mp3FileReader(filePath);
                     waveOut = new WaveOutEvent();
                     waveOut.Init(audioFile);
                     waveOut.Play();
                     return waveOut;
-                
 
-            }
-            else
-            {
-                var audioFile = new AudioFileReader(filePath);
-                waveOut = new WaveOutEvent();
-                waveOut.Init(audioFile);
-                waveOut.Play();
-                return waveOut;
+
+                }
+                else
+                {
+                    var audioFile = new AudioFileReader(filePath);
+                    waveOut = new WaveOutEvent();
+                    waveOut.Init(audioFile);
+                    waveOut.Play();
+                    return waveOut;
+                }
             }
         }
 

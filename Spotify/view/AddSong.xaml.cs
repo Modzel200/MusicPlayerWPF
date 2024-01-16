@@ -32,7 +32,7 @@ public partial class AddSong : Window
 
     private void Submit_OnClick(object sender, RoutedEventArgs e)
     {
-        if(File.Exists(sciezka.Text) && tytul.Text.Length >0 && autor.Text.Length>0 && rok.Text.Length > 0 && _playlista.listaUtworow.FirstOrDefault(x => x.nazwa == tytul.Text)==null)
+        if (File.Exists(sciezka.Text) && tytul.Text.Length > 0 && autor.Text.Length > 0 && rok.Text.Length > 0 && _playlista.listaUtworow.FirstOrDefault(x => x.nazwa == tytul.Text) == null)
         {
             string newDir = "../../../songs/";
             Utwor utwor = utworProto.Clone() as Utwor;
@@ -41,13 +41,49 @@ public partial class AddSong : Window
             utwor.autorUtworu = _autor;
             string originalFilePath = sciezka.Text;
             string newFilePath = Path.Combine(newDir, Path.GetFileName(originalFilePath));
+            
 
-            File.Copy(originalFilePath, newFilePath);
-            utwor.AddPath(newFilePath);
-            _autor.dodajPiosenke(utwor);
-            _playlista.dodajUtwor(utwor);
+            var existingSong = _playlista.getLista().FirstOrDefault(obj => obj.sciezka == newFilePath);
+
+            if (existingSong != null)
+            {
+                MessageBox.Show("Utwór już jest w playliscie");
+                return;
+            }
+
+            if (File.Exists(newFilePath))
+            {
+                Biblioteka biblioteka = Biblioteka.GetInstance();
+                List<Utwor> utwory = biblioteka.getUtwory();
+
+                var utwor_istniejacy = utwory.Find(obj => obj.sciezka == newFilePath);
+
+                if (utwor_istniejacy != null)
+                {
+
+                    _playlista.dodajUtwor(utwor_istniejacy);
+                }
+                else
+                {                    
+                    utwor.AddPath(newFilePath);
+                    _autor.dodajPiosenke(utwor);
+                    _playlista.dodajUtwor(utwor);
+                    utwory.Add(utwor);
+                }
+            }
+            else
+            {
+                File.Copy(originalFilePath, newFilePath);
+                utwor.AddPath(newFilePath);
+                _autor.dodajPiosenke(utwor);
+                _playlista.dodajUtwor(utwor);
+
+            }
+
             this.Close();
         }
+
+
     }
     private void autor_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {

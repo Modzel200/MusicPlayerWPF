@@ -36,6 +36,15 @@ public class Playlista : Prototyp
         }
         return null;
     }
+
+    public void usunUtwor(int i)
+    {
+        if (listaUtworow.Count > 0 && i < listaUtworow.Count && i != -1)
+        {
+            listaUtworow.RemoveAt(i);
+        }
+    }
+
     public int getIlosc()
     {
         return ilosc;

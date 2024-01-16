@@ -10,9 +10,13 @@
 
     <ItemGroup>
       <None Remove="img\back.png" />
+      <None Remove="img\minus.png" />
+      <None Remove="img\mix.png" />
       <None Remove="view\plus.png" />
       <Resource Include="img\back.png" />
       <None Remove="img\next.png" />
+      <Resource Include="img\minus.png" />
+      <Resource Include="img\mix.png" />
       <Resource Include="img\next.png" />
       <None Remove="img\play.png" />
       <Resource Include="img\play.png" />

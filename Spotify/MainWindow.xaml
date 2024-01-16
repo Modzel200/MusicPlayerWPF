@@ -47,22 +47,25 @@
                 <Button Grid.Row="1" Name="createNewSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 50 10 0" Width="30" Height="30" Click="CreateNewSongButton_OnClick">
                     <Image  Source="/../../../img/plus.png"></Image> 
                 </Button>
-                <Button Grid.Row="1" Name="randomSongs" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 10 0" Width="30" Height="30" Click="RandomSongButton_OnClick">
-                    
+                <Button Grid.Row="1" Name="deleteSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 10 0" Width="30" Height="30" Click="DeleteSongButton_OnClick">
+                    <Image Name="delete"></Image>
+                </Button>
+                <Button Grid.Row="1" Name="randomSongs" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 150 10 0" Width="30" Height="30" Click="RandomSongButton_OnClick">
+                    <Image Name="shuffle"></Image>
                 </Button>
             </Grid>
             <Grid Grid.Column="2">
                 <TextBlock> Tu dekorator z auterem</TextBlock>
-                <TextBlock Margin="0 60 10 0"> Glosnosc</TextBlock>
-                <Slider Width="200" Margin="0 100 10 0" Minimum="0" Maximum="1" Value="{Binding Glosnosc, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" />
 
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="45*"></ColumnDefinition>
+                <ColumnDefinition Width="40*"></ColumnDefinition>
                 <ColumnDefinition Width="10*"></ColumnDefinition>
-                <ColumnDefinition Width="45*"></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="10*"></ColumnDefinition>
+                <ColumnDefinition Width="40*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button HorizontalAlignment="Right" Width="50" Height="50">
                 <Image  Source="/../../../img/back.png"></Image> 
@@ -73,7 +76,10 @@
             <Button Grid.Column="2" Width="50" Height="50" HorizontalAlignment="Left">
                 <Image Source="/../../../img/next.png" Width="50"></Image>  
             </Button>
-
+            <Button Grid.Column="3" Width="50" Height="50" HorizontalAlignment="Left" Click="PauseButton_OnClick">
+                <Image Name="stop" Source="/../../../img/pause.png" Width="50"></Image>
+            </Button>
+            <Slider Width="200" Grid.Column="4"  Margin="0 50 10 0" Minimum="0" Maximum="1" Value="{Binding Glosnosc, Mode=TwoWay}" ValueChanged="Slider_ValueChanged" />
         </Grid>
     </Grid>
 </Window>

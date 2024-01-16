@@ -27,7 +27,7 @@ namespace Spotify;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : Window, IObserver
 {
     public Biblioteka biblioteka;
     public Player player;
@@ -49,21 +49,19 @@ public partial class MainWindow : Window
             biblioteka = deserialized;
         }
         InitializeComponent();
-        
+        shuffle.Source = new BitmapImage(new Uri(@"/img/mix.png", UriKind.Relative));
+        stop.Source = new BitmapImage(new Uri(@"/img/pause.png", UriKind.Relative));
+        delete.Source = new BitmapImage(new Uri(@"/img/minus.png", UriKind.Relative));
+
         originator = new Originator();
         savedStates = new List<Memento>();
         player = Player.getInstance();
         isPlaying = false;
-        refresh();
+        UpdateUI();
     }
 
-    public void refresh()
+    public void save()
     {
-        playlistList.Items.Clear();
-        foreach (var i in biblioteka.getPlaylisty())
-        {
-            playlistList.Items.Add(i.getNazwa());
-        }
         originator.State = JsonSerializer.Serialize<Biblioteka>(biblioteka, new JsonSerializerOptions
         {
             ReferenceHandler = ReferenceHandler.IgnoreCycles
@@ -77,12 +75,9 @@ public partial class MainWindow : Window
         AddPlaylist addPlaylist = new AddPlaylist(biblioteka);
         
         addPlaylist.Show();
-        addPlaylist.Closed += AddPlaylist_Closed;
+
     }
-    private void AddPlaylist_Closed(object sender, EventArgs e)
-    {
-        UpdateUI();
-    }
+
 
     private void moveToPlaylist(object sender, SelectionChangedEventArgs e)
     {
@@ -133,10 +128,17 @@ public partial class MainWindow : Window
         else
         {
             isPlaying = false;
-            player.stop();
+            player.pause();
             playPauseImg.Source = new BitmapImage(new Uri(@"/img/play.png", UriKind.Relative));
         }
 
+        UpdateUI();
+
+    }
+
+    private void PauseButton_OnClick(Object sender, RoutedEventArgs e)
+    {
+        player.stop();
     }
 
     private void RandomSongButton_OnClick(Object sender, RoutedEventArgs e)
@@ -153,6 +155,18 @@ public partial class MainWindow : Window
 
         player.AdjustVolume(newValue);
     }
+
+    private void DeleteSongButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (playlistList != null && songsList.SelectedIndex >= 0)
+        {
+
+            playlist.usunUtwor(songsList.SelectedIndex);
+
+            UpdateUI();
+        }
+    }
+
 
 
 
@@ -175,8 +189,14 @@ public partial class MainWindow : Window
                 songsList.Items.Add(i.getTytul() + " " + i.getAutor().getNazwisko());
             }
         }
-        refresh();
+        save();
 
+    }
+
+    public void Update()
+    {
+
+        UpdateUI();
     }
 
 }

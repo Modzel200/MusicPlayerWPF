@@ -35,14 +35,20 @@ namespace Spotify.logic
 
         public void play(string filePath)
         {
-            state = new PlayState();
+            SetState(new PlayState());
             waveOut = state.Play(filePath, waveOut);
         }
 
         public void stop()
         {
-            state = new StopState();
+            SetState(new StopState());
             state.Stop(waveOut);
+        }
+
+        public void pause()
+        {
+            SetState(new PauseState());
+            state.Pause(waveOut);
         }
 
         public void AdjustVolume(double glosnosc)

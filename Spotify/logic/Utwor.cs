@@ -21,7 +21,7 @@ public class Utwor : Prototyp
     }
     public void AddPath(string path)
     {
-        this.sciezka += path;
+        this.sciezka = path;
     }
 
     public Autor getAutor()
