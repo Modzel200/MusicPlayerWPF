@@ -1,16 +1,24 @@
 ﻿namespace Spotify.logic;
 
-public class Playlista : Prototyp
+public class Playlista : Prototyp, IObserver
 {
     public List<Utwor> listaUtworow { get; set; }
     public int ilosc { get; set; }
     public float dlugosc { get; set; }
+    private List<IObserver> observers = new List<IObserver>();
+    private Action playlistUpdateFunction;
 
-    public Playlista(string nazwaPlaylisty) : base(nazwaPlaylisty)
+    public Playlista(string nazwaPlaylisty, Action updateFunction) : base(nazwaPlaylisty)
     {
         ilosc = 0;
         dlugosc = 0;
         listaUtworow = new List<Utwor>();
+        playlistUpdateFunction = updateFunction;
+    }
+
+    public void Update()
+    {
+        playlistUpdateFunction?.Invoke();
     }
 
     public string getNazwa()
@@ -21,6 +29,7 @@ public class Playlista : Prototyp
     {
         listaUtworow.Add(utwor);
         ilosc++;
+        Update();
     }
 
     public List<Utwor> getLista()
@@ -43,6 +52,7 @@ public class Playlista : Prototyp
         {
             listaUtworow.RemoveAt(i);
         }
+        Update();
     }
 
     public int getIlosc()
@@ -64,6 +74,7 @@ public class Playlista : Prototyp
             int k = rng.Next(n--);
             (listaUtworow[n], listaUtworow[k]) = (listaUtworow[k], listaUtworow[n]);
         }
+        Update();
     }
     public override Prototyp Clone()
     {

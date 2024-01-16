@@ -1,32 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Spotify.logic
+﻿public interface IObserver
 {
-    public interface IObserver
+    void Update();
+}
+
+public class Observer : IObserver
+{
+    private readonly Action updateAction;
+
+    public Observer(Action updateAction)
     {
-        void Update();
+        this.updateAction = updateAction;
     }
-    public class Observable
+
+    public void Update()
     {
-        private List<IObserver> observers = new List<IObserver>();
-
-        public void AddObserver(IObserver observer)
-        {
-            observers.Add(observer);
-        }
-
-        public void RemoveObserver(IObserver observer)
-        {
-            observers.Remove(observer);
-        }
-
-        public void NotifyObservers()
-        {
-            foreach (var observer in observers)
-            {
-                observer.Update();
-            }
-        }
+        updateAction?.Invoke();
     }
 }

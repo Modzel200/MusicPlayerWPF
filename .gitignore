@@ -1,3 +1,5 @@
 /.idea
 Spotify/bin
 Spotify/obj
+*.wav
+*.mp3

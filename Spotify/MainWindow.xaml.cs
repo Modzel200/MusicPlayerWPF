@@ -27,7 +27,7 @@ namespace Spotify;
 /// <summary>
 /// Interaction logic for MainWindow.xaml
 /// </summary>
-public partial class MainWindow : Window, IObserver
+public partial class MainWindow : Window
 {
     public Biblioteka biblioteka;
     public Player player;
@@ -37,9 +37,10 @@ public partial class MainWindow : Window, IObserver
     public Originator originator;
     public List<Memento> savedStates;
     public bool isPlaying;
+    private Observer observer;
     public MainWindow()
     {
-        Playlista playProto = new Playlista("Template");
+        Playlista playProto = new Playlista("Template", UpdateUI);
         biblioteka = Biblioteka.GetInstance();
         if (File.Exists("test.json"))
         {
@@ -52,6 +53,8 @@ public partial class MainWindow : Window, IObserver
         shuffle.Source = new BitmapImage(new Uri(@"/img/mix.png", UriKind.Relative));
         stop.Source = new BitmapImage(new Uri(@"/img/pause.png", UriKind.Relative));
         delete.Source = new BitmapImage(new Uri(@"/img/minus.png", UriKind.Relative));
+        observer = new Observer(UpdateUI);
+        biblioteka.RegisterObserver(observer);
 
         originator = new Originator();
         savedStates = new List<Memento>();
@@ -72,12 +75,25 @@ public partial class MainWindow : Window, IObserver
 
     private void CreateNewPlaylistButton_OnClick(object sender, RoutedEventArgs e)
     {
-        AddPlaylist addPlaylist = new AddPlaylist(biblioteka);
+        AddPlaylist addPlaylist = new AddPlaylist(biblioteka,UpdateUI);
         
         addPlaylist.Show();
 
     }
 
+    private void RemovePlaylistButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        biblioteka.removePlaylista(biblioteka.getPlaylista(playlistList.SelectedIndex));
+    }
+
+    private void upPlaylistPosition_OnClick(object sender, RoutedEventArgs e)
+    {
+        biblioteka.upPosition(playlistList.SelectedIndex);
+    }
+    private void downPlaylistPosition_OnClick(object sender, RoutedEventArgs e)
+    {
+        biblioteka.downPosition(playlistList.SelectedIndex);
+    }
 
     private void moveToPlaylist(object sender, SelectionChangedEventArgs e)
     {
@@ -104,14 +120,9 @@ public partial class MainWindow : Window, IObserver
     private void CreateNewSongButton_OnClick(object sender, RoutedEventArgs e)
     {
         AddSong addSong = new AddSong(playlist, biblioteka);
-        addSong.Closed += addSong_Closed;
         addSong.Show();
     }
 
-    private void addSong_Closed(object sender, EventArgs e)
-    {
-        UpdateUI();
-    }
 
     private void PlayButton_OnClick(object sender, RoutedEventArgs e)
     {
@@ -146,6 +157,7 @@ public partial class MainWindow : Window, IObserver
     private void PauseButton_OnClick(Object sender, RoutedEventArgs e)
     {
         player.stop();
+        UpdateUI();
     }
 
     private void RandomSongButton_OnClick(Object sender, RoutedEventArgs e)
@@ -169,8 +181,8 @@ public partial class MainWindow : Window, IObserver
         {
 
             playlist.usunUtwor(songsList.SelectedIndex);
+            playlistList.SelectedIndex=-1;
 
-            UpdateUI();
         }
     }
 
@@ -198,12 +210,6 @@ public partial class MainWindow : Window, IObserver
         }
         save();
 
-    }
-
-    public void Update()
-    {
-
-        UpdateUI();
     }
 
 }

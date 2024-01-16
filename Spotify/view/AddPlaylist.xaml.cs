@@ -10,9 +10,9 @@ public partial class AddPlaylist : Window
 {
     public Biblioteka biblioteka;
     private Playlista proto;
-    public AddPlaylist(Biblioteka biblioteka)
+    public AddPlaylist(Biblioteka biblioteka, Action updateui)
     {
-        proto = new Playlista("template");
+        proto = new Playlista("template", updateui);
         InitializeComponent();
         playlistName.Text = proto.getNazwa().ToString();
         this.biblioteka = biblioteka;
