@@ -12,7 +12,7 @@ public partial class AddSong : Window
     private Playlista _playlista;
     private Utwor utworProto;
     private Biblioteka _biblioteka;
-    private Autor _autor;
+    private AutorBezSzczegolow _autor;
     public AddSong(Playlista playlista, Biblioteka biblioteka)
     {
         _biblioteka = biblioteka;
@@ -20,7 +20,7 @@ public partial class AddSong : Window
 
         RefreshCombo();
         _playlista = playlista;
-        utworProto = new Utwor("template", new Autor("template", "template", "template", "template"), 996, "../../../songs/");
+        utworProto = new Utwor("template", new AutorBezSzczegolow("template"), 996, "../../../songs/");
         tytul.Text = utworProto.getTytul();
         rok.Text = utworProto.rokWydania.ToString();
         sciezka.Text = utworProto.sciezka.ToString();
@@ -87,7 +87,7 @@ public partial class AddSong : Window
     }
     private void autor_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
-        Autor selectedAutor = (Autor)autor.SelectedItem;
+        AutorBezSzczegolow selectedAutor = (AutorBezSzczegolow)autor.SelectedItem;
         _autor = selectedAutor;
     }
     private void AddAutor(object sender, RoutedEventArgs e)

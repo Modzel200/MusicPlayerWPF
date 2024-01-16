@@ -90,7 +90,7 @@ public partial class MainWindow : Window, IObserver
                 playlist = biblioteka.getPlaylista(playlistList.SelectedIndex);
                 foreach (var i in playlist.getLista())
                 {
-                    songsList.Items.Add(i.getTytul() + " " + i.getAutor().getNazwisko());
+                    songsList.Items.Add(i.getTytul());
                 }
             
         }
@@ -115,6 +115,13 @@ public partial class MainWindow : Window, IObserver
 
     private void PlayButton_OnClick(object sender, RoutedEventArgs e)
     {
+        AutorCaleInfo es = new AutorCaleInfo(biblioteka.autorzy[0], biblioteka);
+        List<string> asa = (List<string>)es.getInfo();
+        foreach(var elem in asa)
+        {
+            testing.Text += elem;
+        }
+        
         if (isPlaying == false)
         {
             if (songToPlay != null)
@@ -186,7 +193,7 @@ public partial class MainWindow : Window, IObserver
             playlist = biblioteka.getPlaylista(playlistList.SelectedIndex);
             foreach (var i in playlist.getLista())
             {
-                songsList.Items.Add(i.getTytul() + " " + i.getAutor().getNazwisko());
+                songsList.Items.Add(i.getTytul());
             }
         }
         save();

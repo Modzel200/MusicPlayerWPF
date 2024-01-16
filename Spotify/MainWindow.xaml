@@ -55,7 +55,7 @@
                 </Button>
             </Grid>
             <Grid Grid.Column="2">
-                <TextBlock> Tu dekorator z auterem</TextBlock>
+                <TextBlock Name="testing"> Tu dekorator z auterem</TextBlock>
 
             </Grid>
         </Grid>

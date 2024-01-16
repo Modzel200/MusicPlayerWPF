@@ -28,9 +28,15 @@ namespace Spotify.view
         }
         private void Submit_OnClick(object sender, RoutedEventArgs e)
         {
-            if (imie.Text.Length > 0 && nazwisko.Text.Length > 0 && pseudonim.Text.Length > 0 && _biblioteka.autorzy.FirstOrDefault(x => x.imie == imie.Text && x.nazwisko == nazwisko.Text && x.pseudonim == pseudonim.Text && x.narodowosc == narodowosc.Text) == null)
+            if (imie.Text.Length > 0 && nazwisko.Text.Length > 0 && pseudonim.Text.Length > 0 && _biblioteka.autorzy.FirstOrDefault(x => x.pseudonim == pseudonim.Text) == null && _biblioteka.autorzySzczegoly.FirstOrDefault(x => x.imie == imie.Text && x.nazwisko == nazwisko.Text && x.narodowosc == narodowosc.Text && x.krotkiOpis == opis.Text) == null )
             {
-                _biblioteka.addAutor(new Autor(imie.Text, nazwisko.Text, pseudonim.Text, narodowosc.Text));
+                AutorBezSzczegolow autorBez = new AutorBezSzczegolow(pseudonim.Text);
+                AutorSzczegoly autorZ = new AutorSzczegoly(imie.Text, nazwisko.Text, narodowosc.Text, opis.Text);
+                autorBez.setIndeks(_biblioteka.getIter());
+                autorZ.setIndeks(_biblioteka.getIter());
+                _biblioteka.increaseIter();
+                _biblioteka.addAutor(autorBez);
+                _biblioteka.addAutorSzczegoly(autorZ);
                 this.Close();
             }
         }

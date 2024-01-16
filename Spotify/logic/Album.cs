@@ -3,7 +3,7 @@
 public class Album : Prototyp
 {
     public List<Utwor> listaUtworow { get; set; }
-    public Autor autorAlbumu { get; set; }
+    public AutorBezSzczegolow autorAlbumu { get; set; }
     public int rokWydania { get; set; }
 
     public Album(string nazwa) : base(nazwa)
@@ -34,7 +34,7 @@ public class Album : Prototyp
     {
         Album albumCopy = (Album)MemberwiseClone();
         albumCopy.listaUtworow = new List<Utwor>(listaUtworow);
-        albumCopy.autorAlbumu = new Autor(this.autorAlbumu.imie, this.autorAlbumu.nazwisko, this.autorAlbumu.pseudonim, this.autorAlbumu.narodowosc);
+        albumCopy.autorAlbumu = new AutorBezSzczegolow(this.autorAlbumu.pseudonim);
         albumCopy.rokWydania = this.rokWydania;
         return (Prototyp)MemberwiseClone();
     }

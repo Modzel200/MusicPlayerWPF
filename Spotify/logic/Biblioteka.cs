@@ -4,17 +4,21 @@ namespace Spotify.logic;
 
 public class Biblioteka
 {
+    public static int iter;
     public List<Playlista> listaPlaylist { get; set; }
     public List<Album> albumy { get; set; }
     public List<Utwor> utwory { get; set; }
-    public List<Autor> autorzy { get; set; }
+    public List<AutorBezSzczegolow> autorzy { get; set; }
+    public List<AutorSzczegoly> autorzySzczegoly {  get; set; }
 
     private Biblioteka()
     {
         listaPlaylist = new List<Playlista>();
         albumy = new List<Album>();
         utwory = new List<Utwor>();
-        autorzy = new List<Autor>();
+        autorzy = new List<AutorBezSzczegolow>();
+        autorzySzczegoly = new List<AutorSzczegoly>();
+        iter = 0;
     }
     private static Biblioteka _instance;
     public static Biblioteka GetInstance()
@@ -49,9 +53,21 @@ public class Biblioteka
     {
         listaPlaylist.Add(playlista);
     }
-    public void addAutor(Autor autor)
+    public void addAutor(AutorBezSzczegolow autor)
     {
         autorzy.Add(autor);
+    }
+    public void addAutorSzczegoly(AutorSzczegoly autor)
+    {
+        autorzySzczegoly.Add(autor);
+    }
+    public int getIter()
+    {
+        return iter;
+    }
+    public void increaseIter()
+    {
+        iter++;
     }
 
 }

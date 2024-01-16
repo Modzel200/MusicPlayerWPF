@@ -2,14 +2,14 @@
 
 public class Utwor : Prototyp
 {
-    public Autor autorUtworu { get; set; }
+    public AutorBezSzczegolow autorUtworu { get; set; }
     public Gatunek? gatunekUtworu { get; set; }
     public int rokWydania { get; set; }
     public string sciezka { get; set; }
     public float? dlugosc { get; set; }
     public int? odsluchania { get; set; }
 
-    public Utwor(string t, Autor a, int r, string s) : base(t)
+    public Utwor(string t, AutorBezSzczegolow a, int r, string s) : base(t)
     {
         autorUtworu = a;
         rokWydania = r;
@@ -46,7 +46,7 @@ public class Utwor : Prototyp
     public override Prototyp Clone()
     {
         Utwor utworClone = (Utwor)MemberwiseClone();
-        utworClone.autorUtworu = new Autor(this.autorUtworu.imie, this.autorUtworu.nazwisko, this.autorUtworu.pseudonim, this.autorUtworu.narodowosc);
+        utworClone.autorUtworu = new AutorBezSzczegolow(this.autorUtworu.pseudonim);
         //utworClone.gatunekUtworu = new Gatunek(this.gatunekUtworu.nazwa);
         utworClone.rokWydania = this.rokWydania;
         //utworClone.odsluchania = this.odsluchania;
