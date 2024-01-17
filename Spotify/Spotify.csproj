@@ -18,10 +18,12 @@
       <Resource Include="img\minus.png" />
       <Resource Include="img\mix.png" />
       <Resource Include="img\next.png" />
+	<Resource Include="img\pause.png" />
+	<Resource Include="img\stop.png" />
+	<Resource Include="img\up.png" />
+	<Resource Include="img\down.png" />
       <None Remove="img\play.png" />
       <Resource Include="img\play.png" />
-      <None Remove="img\stop.png" />
-      <Resource Include="img\stop.png" />
       <None Remove="img\Winamp-logo.svg.png" />
       <Resource Include="img\Winamp-logo.svg.png" />
       <None Remove="img\plus.png" />

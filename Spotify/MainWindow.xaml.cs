@@ -21,6 +21,7 @@ using Spotify.view;
 using Spotify.VIew;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using System.Text.Json.Serialization;
+using NAudio.Wave;
 
 namespace Spotify;
 
@@ -137,22 +138,45 @@ public partial class MainWindow : Window
     }
 
 
+    private bool uiButtonClicked = false;
+
     private void PlayButton_OnClick(object sender, RoutedEventArgs e)
     {
         AutorCaleInfo es = new AutorCaleInfo(biblioteka.autorzy[0], biblioteka);
         List<string> asa = (List<string>)es.getInfo();
-        foreach(var elem in asa)
+        foreach (var elem in asa)
         {
             testing.Text += elem;
         }
-        
+
         if (isPlaying == false)
         {
             if (songToPlay != null)
             {
-                player.play(songToPlay.getSciezka());
+                WaveOutEvent waveOut = player.play(songToPlay.getSciezka());
+
+                waveOut.PlaybackStopped += (s, args) =>
+                {
+
+                    if (!uiButtonClicked)
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            if (playlist.getUtwor(songsList.SelectedIndex +1 )==null)
+                            {
+                                PauseButton_OnClick(sender, e);
+                            }
+                            else
+                            {
+                                NextButton_OnClick(s, e);
+                            }
+                            
+                        });
+                    }
+                    uiButtonClicked = false;
+                };
+                
                 isPlaying = true;
-                //playPauseImg.Source = "/../../../img/play.png";
                 playPauseImg.Source = new BitmapImage(new Uri(@"/img/stop.png", UriKind.Relative));
             }
         }
@@ -164,19 +188,13 @@ public partial class MainWindow : Window
         }
 
         UpdateUI();
-
-    }
-
-    private void PauseButton_OnClick(Object sender, RoutedEventArgs e)
-    {
-        player.stop();
-        isPlaying = false;
-        UpdateUI();
     }
 
     private void NextButton_OnClick(object sender, RoutedEventArgs e)
     {
+        uiButtonClicked = true;
         PauseButton_OnClick(sender, e);
+
         if (songsList.SelectedIndex >= 0)
         {
             songsList.SelectedIndex += 1;
@@ -187,14 +205,27 @@ public partial class MainWindow : Window
 
     private void PrevButton_OnClick(object sender, RoutedEventArgs e)
     {
+        uiButtonClicked = true;
         PauseButton_OnClick(sender, e);
-        if(songsList.SelectedIndex >= 0)
+
+        if (songsList.SelectedIndex >= 0)
         {
             songsList.SelectedIndex -= 1;
             loadSong(sender, e);
             PlayButton_OnClick(sender, e);
         }
     }
+
+
+    private void PauseButton_OnClick(Object sender, RoutedEventArgs e)
+    {
+        uiButtonClicked = true;
+        playPauseImg.Source = new BitmapImage(new Uri(@"/img/play.png", UriKind.Relative));
+        player.stop();
+        isPlaying = false;
+        UpdateUI();
+    }
+
 
     private void RandomSongButton_OnClick(Object sender, RoutedEventArgs e)
     {

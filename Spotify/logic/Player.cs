@@ -33,10 +33,11 @@ namespace Spotify.logic
             state = newState;
         }
 
-        public void play(string filePath)
+        public WaveOutEvent play(string filePath)
         {
             SetState(new PlayState());
             waveOut = state.Play(filePath, waveOut);
+            return waveOut;
         }
 
         public void stop()
