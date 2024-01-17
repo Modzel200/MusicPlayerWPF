@@ -60,9 +60,27 @@ public class Playlista : Prototyp, IObserver
         return ilosc;
     }
 
-    public float getDlugosc()
+    public float getDlugosc(int i)
     {
         return dlugosc;
+    }
+
+    public void upPosition(int i)
+    {
+        if (i > 0 && i != -1)
+        {
+            (listaUtworow[i], listaUtworow[i - 1]) = (listaUtworow[i - 1], listaUtworow[i]);
+        }
+        Update();
+    }
+
+    public void downPosition(int i)
+    {
+        if (i < listaUtworow.Count - 1 && i != -1)
+        {
+            (listaUtworow[i], listaUtworow[i + 1]) = (listaUtworow[i + 1], listaUtworow[i]);
+        }
+        Update();
     }
 
     public void wymieszaj()

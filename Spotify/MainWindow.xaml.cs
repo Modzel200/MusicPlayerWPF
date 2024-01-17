@@ -53,6 +53,8 @@ public partial class MainWindow : Window
         shuffle.Source = new BitmapImage(new Uri(@"/img/mix.png", UriKind.Relative));
         stop.Source = new BitmapImage(new Uri(@"/img/pause.png", UriKind.Relative));
         delete.Source = new BitmapImage(new Uri(@"/img/minus.png", UriKind.Relative));
+        upsong.Source = new BitmapImage(new Uri(@"/img/up.png", UriKind.Relative));
+        downsong.Source = new BitmapImage(new Uri(@"/img/down.png", UriKind.Relative));
         observer = new Observer(UpdateUI);
         biblioteka.RegisterObserver(observer);
 
@@ -93,6 +95,17 @@ public partial class MainWindow : Window
     private void downPlaylistPosition_OnClick(object sender, RoutedEventArgs e)
     {
         biblioteka.downPosition(playlistList.SelectedIndex);
+    }
+
+    private void UpSongButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        Playlista playlista = biblioteka.getPlaylista(playlistList.SelectedIndex);
+        playlista.upPosition(songsList.SelectedIndex);
+    }
+    private void DownSongButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        Playlista playlista = biblioteka.getPlaylista(playlistList.SelectedIndex);
+        playlista.downPosition(songsList.SelectedIndex);
     }
 
     private void moveToPlaylist(object sender, SelectionChangedEventArgs e)
@@ -157,7 +170,30 @@ public partial class MainWindow : Window
     private void PauseButton_OnClick(Object sender, RoutedEventArgs e)
     {
         player.stop();
+        isPlaying = false;
         UpdateUI();
+    }
+
+    private void NextButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        PauseButton_OnClick(sender, e);
+        if (songsList.SelectedIndex >= 0)
+        {
+            songsList.SelectedIndex += 1;
+            loadSong(sender, e);
+            PlayButton_OnClick(sender, e);
+        }
+    }
+
+    private void PrevButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        PauseButton_OnClick(sender, e);
+        if(songsList.SelectedIndex >= 0)
+        {
+            songsList.SelectedIndex -= 1;
+            loadSong(sender, e);
+            PlayButton_OnClick(sender, e);
+        }
     }
 
     private void RandomSongButton_OnClick(Object sender, RoutedEventArgs e)

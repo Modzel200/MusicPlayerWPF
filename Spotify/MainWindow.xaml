@@ -120,14 +120,20 @@
                 <TextBlock Name="songsTitle" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5 0 0"></TextBlock>
                 <ListBox Grid.Row="1" Name="songsList" ItemsSource="{Binding}" BorderThickness="3" BorderBrush="Gray" Height="450" SelectionChanged="loadSong">
                 </ListBox>
-                <Button Grid.Row="1" Name="createNewSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 50 10 0" Width="30" Height="30" Click="CreateNewSongButton_OnClick">
+                <Button Name="createNewSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 50 10 0" Width="30" Height="30" Click="CreateNewSongButton_OnClick">
                     <Image  Source="/../../../img/plus.png"></Image> 
                 </Button>
-                <Button Grid.Row="1" Name="deleteSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 10 0" Width="30" Height="30" Click="DeleteSongButton_OnClick">
+                <Button Name="deleteSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 10 0" Width="30" Height="30" Click="DeleteSongButton_OnClick">
                     <Image Name="delete"></Image>
                 </Button>
-                <Button Grid.Row="1" Name="randomSongs" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 150 10 0" Width="30" Height="30" Click="RandomSongButton_OnClick">
+                <Button Name="randomSongs" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 150 10 0" Width="30" Height="30" Click="RandomSongButton_OnClick">
                     <Image Name="shuffle"></Image>
+                </Button>
+                <Button Name="upSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 200 10 0" Width="30" Height="30" Click="UpSongButton_OnClick">
+                    <Image Name="upsong"></Image>
+                </Button>
+                <Button Name="downSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 250 10 0" Width="30" Height="30" Click="DownSongButton_OnClick">
+                    <Image Name="downsong"></Image>
                 </Button>
             </Grid>
             <Grid Grid.Column="2">
@@ -143,13 +149,13 @@
                 <ColumnDefinition Width="10*"></ColumnDefinition>
                 <ColumnDefinition Width="40*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button HorizontalAlignment="Right" Width="50" Height="50">
+            <Button HorizontalAlignment="Right" Width="50" Height="50" Click="PrevButton_OnClick">
                 <Image  Source="/../../../img/back.png"></Image> 
             </Button>
             <Button Grid.Column="1" Width="50" Height="50" Name="playButton" Click="PlayButton_OnClick">
                 <Image Name="playPauseImg" Source="/../../../img/play.png" ></Image>
             </Button>
-            <Button Grid.Column="2" Width="50" Height="50" HorizontalAlignment="Left">
+            <Button Grid.Column="2" Width="50" Height="50" HorizontalAlignment="Left" Click="NextButton_OnClick">
                 <Image Source="/../../../img/next.png" Width="50"></Image>  
             </Button>
             <Button Grid.Column="3" Width="50" Height="50" HorizontalAlignment="Left" Click="PauseButton_OnClick">
