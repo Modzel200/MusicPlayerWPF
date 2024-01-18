@@ -1,6 +1,6 @@
 ﻿namespace Spotify.logic;
 
-public class Playlista : IObserver
+public class Playlista : Subject
 {
     public string nazwa {  get; set; }
     public List<Utwor> listaUtworow { get; set; }
@@ -23,6 +23,7 @@ public class Playlista : IObserver
     {
         listaUtworow.Add(utwor);
         ilosc++;
+        NotifyObservers();
     }
 
     public List<Utwor> getLista()
@@ -45,6 +46,7 @@ public class Playlista : IObserver
         {
             listaUtworow.RemoveAt(i);
         }
+        NotifyObservers();
     }
 
     public int getIlosc()
@@ -63,6 +65,7 @@ public class Playlista : IObserver
         {
             (listaUtworow[i], listaUtworow[i - 1]) = (listaUtworow[i - 1], listaUtworow[i]);
         }
+        NotifyObservers();
     }
 
     public void downPosition(int i)
@@ -71,6 +74,7 @@ public class Playlista : IObserver
         {
             (listaUtworow[i], listaUtworow[i + 1]) = (listaUtworow[i + 1], listaUtworow[i]);
         }
+        NotifyObservers();
     }
 
     public void wymieszaj()
@@ -82,6 +86,7 @@ public class Playlista : IObserver
             int k = rng.Next(n--);
             (listaUtworow[n], listaUtworow[k]) = (listaUtworow[k], listaUtworow[n]);
         }
+        NotifyObservers();
     }
     //public override Prototyp Clone()
     //{

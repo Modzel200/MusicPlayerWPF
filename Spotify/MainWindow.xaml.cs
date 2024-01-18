@@ -61,6 +61,10 @@ public partial class MainWindow : Window
         downsong.Source = new BitmapImage(new Uri(@"/img/down.png", UriKind.Relative));
         observer = new Observer(UpdateUI);
         biblioteka.RegisterObserver(observer);
+        foreach (Playlista playlista in biblioteka.getPlaylisty())
+        {
+            playlista.RegisterObserver(observer);
+        }
 
         originator = new Originator();
         savedStates = new List<Memento>();
@@ -84,7 +88,10 @@ public partial class MainWindow : Window
         AddPlaylist addPlaylist = new AddPlaylist(biblioteka);
         
         addPlaylist.Show();
-
+        foreach(Playlista playlista in biblioteka.getPlaylisty())
+        {
+            playlista.RegisterObserver(observer);
+        }
     }
 
     private void RemovePlaylistButton_OnClick(object sender, RoutedEventArgs e)
@@ -261,24 +268,26 @@ public partial class MainWindow : Window
 
     private void UpdateUI()
     {
+        int index = playlistList.SelectedIndex;
+        int songIndex = songsList.SelectedIndex;
         playlistList.Items.Clear();
         foreach (var i in biblioteka.getPlaylisty())
         {
             playlistList.Items.Add(i.getNazwa());
         }
-
-        if (playlistList.SelectedIndex >= 0)
+        if (index >= 0)
         {
-            
-            songsTitle.Text = biblioteka.getPlaylista(playlistList.SelectedIndex).getNazwa();
+            songsTitle.Text = biblioteka.getPlaylista(index).getNazwa();
             songsList.Items.Clear();
-            playlist = biblioteka.getPlaylista(playlistList.SelectedIndex);
+            playlist = biblioteka.getPlaylista(index);
             foreach (var i in playlist.getLista())
             {
                 songsList.Items.Add(i.getTytul());
             }
         }
         save();
+        playlistList.SelectedIndex = index;
+        songsList.SelectedIndex = songIndex;
 
     }
 

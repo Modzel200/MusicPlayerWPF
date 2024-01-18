@@ -16,7 +16,7 @@ public partial class AddPlaylist : Window
         InitializeComponent();
         playlistName.Text = proto.getNazwa().ToString();
         this.biblioteka = biblioteka;
-        
+
     }
 
     private void CreatePlaylistButton_OnClick(object sender, RoutedEventArgs e)
