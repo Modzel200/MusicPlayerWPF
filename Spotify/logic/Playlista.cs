@@ -1,35 +1,28 @@
 ﻿namespace Spotify.logic;
 
-public class Playlista : Prototyp, IObserver
+public class Playlista : IObserver
 {
+    public string nazwa {  get; set; }
     public List<Utwor> listaUtworow { get; set; }
     public int ilosc { get; set; }
     public float dlugosc { get; set; }
-    private List<IObserver> observers = new List<IObserver>();
-    private Action playlistUpdateFunction;
 
-    public Playlista(string nazwaPlaylisty, Action updateFunction) : base(nazwaPlaylisty)
+    public Playlista(string nazwaPlaylisty)
     {
+        nazwa = nazwaPlaylisty;
         ilosc = 0;
         dlugosc = 0;
         listaUtworow = new List<Utwor>();
-        playlistUpdateFunction = updateFunction;
-    }
-
-    public void Update()
-    {
-        playlistUpdateFunction?.Invoke();
     }
 
     public string getNazwa()
     {
-        return base.nazwa;
+        return nazwa;
     }
     public void dodajUtwor(Utwor utwor)
     {
         listaUtworow.Add(utwor);
         ilosc++;
-        Update();
     }
 
     public List<Utwor> getLista()
@@ -52,7 +45,6 @@ public class Playlista : Prototyp, IObserver
         {
             listaUtworow.RemoveAt(i);
         }
-        Update();
     }
 
     public int getIlosc()
@@ -71,7 +63,6 @@ public class Playlista : Prototyp, IObserver
         {
             (listaUtworow[i], listaUtworow[i - 1]) = (listaUtworow[i - 1], listaUtworow[i]);
         }
-        Update();
     }
 
     public void downPosition(int i)
@@ -80,7 +71,6 @@ public class Playlista : Prototyp, IObserver
         {
             (listaUtworow[i], listaUtworow[i + 1]) = (listaUtworow[i + 1], listaUtworow[i]);
         }
-        Update();
     }
 
     public void wymieszaj()
@@ -92,16 +82,15 @@ public class Playlista : Prototyp, IObserver
             int k = rng.Next(n--);
             (listaUtworow[n], listaUtworow[k]) = (listaUtworow[k], listaUtworow[n]);
         }
-        Update();
     }
-    public override Prototyp Clone()
-    {
-        Playlista playlistaClone = (Playlista)MemberwiseClone();
-        playlistaClone.ilosc = this.ilosc;
-        playlistaClone.dlugosc = this.dlugosc;
-        playlistaClone.listaUtworow = new List<Utwor>(this.listaUtworow);
-        return playlistaClone;
-    }
+    //public override Prototyp Clone()
+    //{
+    //    Playlista playlistaClone = (Playlista)MemberwiseClone();
+    //    playlistaClone.ilosc = this.ilosc;
+    //    playlistaClone.dlugosc = this.dlugosc;
+    //    playlistaClone.listaUtworow = new List<Utwor>(this.listaUtworow);
+    //    return playlistaClone;
+    //}
 
     public void wyeksportuj()
     {

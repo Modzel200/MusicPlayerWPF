@@ -43,7 +43,7 @@ public partial class MainWindow : Window
     private Context context;
     public MainWindow()
     {
-        Playlista playProto = new Playlista("Template", UpdateUI);
+        Playlista playProto = new Playlista("Template");
         biblioteka = Biblioteka.GetInstance();
         context = new Context();
         if (File.Exists("test.json"))
@@ -81,7 +81,7 @@ public partial class MainWindow : Window
 
     private void CreateNewPlaylistButton_OnClick(object sender, RoutedEventArgs e)
     {
-        AddPlaylist addPlaylist = new AddPlaylist(biblioteka,UpdateUI);
+        AddPlaylist addPlaylist = new AddPlaylist(biblioteka);
         
         addPlaylist.Show();
 

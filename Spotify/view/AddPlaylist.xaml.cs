@@ -10,9 +10,9 @@ public partial class AddPlaylist : Window
 {
     public Biblioteka biblioteka;
     private Playlista proto;
-    public AddPlaylist(Biblioteka biblioteka, Action updateui)
+    public AddPlaylist(Biblioteka biblioteka)
     {
-        proto = new Playlista("template", updateui);
+        proto = new Playlista("template");
         InitializeComponent();
         playlistName.Text = proto.getNazwa().ToString();
         this.biblioteka = biblioteka;
@@ -23,7 +23,7 @@ public partial class AddPlaylist : Window
     {
         if(playlistName.Text.Length >0 && biblioteka.listaPlaylist.FirstOrDefault(x => x.nazwa == playlistName.Text) == null)
         {
-            Playlista input = proto.Clone() as Playlista;
+            Playlista input = new Playlista("template");
             input.nazwa = playlistName.Text;
             biblioteka.addPlaylista(input);
             this.Close();
