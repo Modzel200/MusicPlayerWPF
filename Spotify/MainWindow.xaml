@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Winamp"  MinHeight="750" MinWidth="1300"
         Background="#121212">
-    
+
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="White"/>
@@ -59,7 +59,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"></RowDefinition>
@@ -118,10 +118,9 @@
             </Grid>
             <Grid Grid.Column="1">
                 <TextBlock Name="songsTitle" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 5 0 0"></TextBlock>
-                <ListBox Grid.Row="1" Name="songsList" ItemsSource="{Binding}" BorderThickness="3" BorderBrush="Gray" Height="450" SelectionChanged="loadSong">
-                </ListBox>
+                <ListBox Grid.Row="1" Name="songsList" BorderThickness="3" BorderBrush="Gray" Height="450" SelectionChanged="loadSong"/>
                 <Button Name="createNewSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 50 10 0" Width="30" Height="30" Click="CreateNewSongButton_OnClick">
-                    <Image  Source="/../../../img/plus.png"></Image> 
+                    <Image  Source="/../../../img/plus.png"></Image>
                 </Button>
                 <Button Name="deleteSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 100 10 0" Width="30" Height="30" Click="DeleteSongButton_OnClick">
                     <Image Name="delete"></Image>
@@ -135,6 +134,10 @@
                 <Button Name="downSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 250 10 0" Width="30" Height="30" Click="DownSongButton_OnClick">
                     <Image Name="downsong"></Image>
                 </Button>
+                <ComboBox Name="sortChange" HorizontalAlignment="Left" Margin="658,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Text="Sortowanie">
+                    <ComboBoxItem Content="Utwor"/>
+                    <ComboBoxItem Content="Autor"/>
+                </ComboBox>
             </Grid>
             <Grid Grid.Column="2">
                 <TextBlock Name="testing"> Tu dekorator z auterem</TextBlock>
@@ -150,13 +153,13 @@
                 <ColumnDefinition Width="40*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button HorizontalAlignment="Right" Width="50" Height="50" Click="PrevButton_OnClick">
-                <Image  Source="/../../../img/back.png"></Image> 
+                <Image  Source="/../../../img/back.png"></Image>
             </Button>
             <Button Grid.Column="1" Width="50" Height="50" Name="playButton" Click="PlayButton_OnClick">
                 <Image Name="playPauseImg" Source="/../../../img/play.png" ></Image>
             </Button>
             <Button Grid.Column="2" Width="50" Height="50" HorizontalAlignment="Left" Click="NextButton_OnClick">
-                <Image Source="/../../../img/next.png" Width="50"></Image>  
+                <Image Source="/../../../img/next.png" Width="50"></Image>
             </Button>
             <Button Grid.Column="3" Width="50" Height="50" HorizontalAlignment="Left" Click="PauseButton_OnClick">
                 <Image Name="stop" Source="/../../../img/pause.png" Width="50"></Image>

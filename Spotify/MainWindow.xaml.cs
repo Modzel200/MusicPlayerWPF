@@ -22,6 +22,7 @@ using Spotify.VIew;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 using System.Text.Json.Serialization;
 using NAudio.Wave;
+using System.Data;
 
 namespace Spotify;
 
@@ -39,10 +40,12 @@ public partial class MainWindow : Window
     public List<Memento> savedStates;
     public bool isPlaying;
     private Observer observer;
+    private Context context;
     public MainWindow()
     {
         Playlista playProto = new Playlista("Template", UpdateUI);
         biblioteka = Biblioteka.GetInstance();
+        context = new Context();
         if (File.Exists("test.json"))
         {
             string jsonString = File.ReadAllText("test.json");
@@ -279,4 +282,23 @@ public partial class MainWindow : Window
 
     }
 
+    private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        ComboBoxItem typeItem = (ComboBoxItem)sortChange.SelectedItem;
+
+        if (typeItem.Content.ToString() == "Autor")
+        {
+            Playlista playlista = biblioteka.getPlaylista(playlistList.SelectedIndex);
+            context.SetStrategy(new AutorSort(),playlista.getLista());
+            playlista.listaUtworow = context.Sort();
+            UpdateUI();
+        }
+        if (typeItem.Content.ToString() == "Utwor")
+        {
+            Playlista playlista = biblioteka.getPlaylista(playlistList.SelectedIndex);
+            context.SetStrategy(new TitleSort(), playlista.getLista());
+            playlista.listaUtworow = context.Sort();
+            UpdateUI();
+        }
+    }
 }

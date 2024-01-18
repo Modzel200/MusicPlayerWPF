@@ -24,7 +24,7 @@ public class Utwor : Prototyp
         this.sciezka = path;
     }
 
-    public Autor getAutor()
+    public AutorBezSzczegolow getAutor()
     {
         return autorUtworu;
     }
