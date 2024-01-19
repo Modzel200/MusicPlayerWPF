@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Spotify.view"
         mc:Ignorable="d"
-        Title="AddSong" Height="400" Width="300" Background="#121212">
+        Title="AddSong" Height="400" Width="300" Background="#191919">
 
     <Window.Resources>
         <Style TargetType="TextBlock">

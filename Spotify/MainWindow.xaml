@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Spotify"
         mc:Ignorable="d"
-        Title="Winamp"  MinHeight="750" MinWidth="1300"
-        Background="#121212">
+        Title="Winamp"  MinHeight="760" MinWidth="1310" MaxHeight="760" MaxWidth="1310"
+        Background="#191919">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -40,9 +40,9 @@
 
 
         <Style TargetType="ListBox">
-            <Setter Property="Background" Value="#333333"/>
+            <Setter Property="Background" Value="#222222"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="#555555"/>
+            <Setter Property="BorderBrush" Value="#333333"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="5"/>
             <Setter Property="Margin" Value="5"/>
@@ -88,7 +88,14 @@
                     <RowDefinition Height="10*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock HorizontalAlignment="Center" Margin="0 30 0 0 " FontSize="20">Biblioteka</TextBlock>
-                <ListBox Grid.Row="1" Name="playlistList" ItemsSource="{Binding}" BorderThickness="3" BorderBrush="Gray" SelectionChanged="moveToPlaylist">
+                <ListBox Grid.Row="1" Name="playlistList" ItemsSource="{Binding}" BorderThickness="3"  SelectionChanged="moveToPlaylist">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="5">
+                                <TextBlock Text="{Binding}" Foreground="White" />
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
@@ -120,14 +127,22 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Width="770" Height="50">
                     <StackPanel>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" >Sortuj po:</TextBlock>
-                        <ComboBox Name="sortChange" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged" Text="Sortowanie">
+                        <ComboBox Name="sortChange" HorizontalAlignment="Center"  VerticalAlignment="Top" Width="100" Margin="5 0 0 0" SelectionChanged="ComboBox_SelectionChanged" Text="Sortowanie">
                             <ComboBoxItem Content="Utwor"/>
                             <ComboBoxItem Content="Autor"/>
                         </ComboBox>
                     </StackPanel>
                     <TextBlock Name="songsTitle" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="200  0 0 0" ></TextBlock>
                 </StackPanel>
-                <ListBox Grid.Row="1" Name="songsList" BorderThickness="3" BorderBrush="Gray" Height="425" SelectionChanged="loadSong"/>
+                <ListBox Grid.Row="1" Name="songsList" BorderThickness="3" Height="425" SelectionChanged="loadSong">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Padding="5">
+                                <TextBlock Text="{Binding}" Foreground="White" />
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <Button Name="createNewSongButton" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 50 10 0" Width="30" Height="30" Click="CreateNewSongButton_OnClick">
                     <Image  Source="/../../../img/plus.png"></Image>
                 </Button>
@@ -165,7 +180,7 @@
                 <TextBlock HorizontalAlignment="Center" Grid.Row="3" Margin="0 30 0 0 " FontSize="20" FontWeight="Bold" Name="autorNazwisko"></TextBlock>
                 <TextBlock HorizontalAlignment="Center" Grid.Row="4" Margin="0 30 0 0 " FontSize="20" FontWeight="Bold" Name="autorNarodowosc"></TextBlock>
                 <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Grid.Row="5" Margin="0 30 0 0 " FontSize="20" FontWeight="Bold" Name="autorOpis"></TextBlock>
-                <Button Grid.Row="6" FontSize="20" Click="ShowDetailsAutor" Name="DetailsButton">Pokaż szczegóły Autora</Button>
+                <Button Grid.Row="6" FontSize="20" Click="ShowDetailsAutor" Name="DetailsButton">Pokaż szczegóły</Button>
             </Grid>
         </Grid>
         <Grid Grid.Row="2">

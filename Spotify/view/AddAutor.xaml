@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Spotify.view"
         mc:Ignorable="d"
         Title="AddAutor" Height="400" Width="300"
-            Background="#121212">
+            Background="#191919">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -92,8 +92,10 @@
         <TextBox Grid.Row="4" Height="25" Width="200" Name="narodowosc"/>
         </StackPanel>
 
+        <StackPanel Grid.Row="5" Orientation="Vertical" HorizontalAlignment="Center">
         <TextBlock Grid.Row="5">Krótki opis</TextBlock>
-        <TextBox Grid.Row="5" Height="50" Width="170" Name="opis" Margin="5,0,0,0"/>
+        <TextBox Grid.Row="5" Height="50" Width="200" Name="opis" Margin="5,0,0,0"/>
+        </StackPanel>
 
         <Button Grid.Row="6" Height="40" Width="100" Name="submit" Click="Submit_OnClick">Dodaj</Button>
     </Grid>

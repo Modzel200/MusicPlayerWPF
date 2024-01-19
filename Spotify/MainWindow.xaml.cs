@@ -156,7 +156,7 @@ public partial class MainWindow : Window
         autorNazwisko.Text = "";
         autorNarodowosc.Text = "";
         autorOpis.Text = "";
-        DetailsButton.Content = "Pokaż szczegóły Autora";
+        DetailsButton.Content = "Pokaż szczegóły";
     }
     private void ShowDetailsAutor(object sender, RoutedEventArgs e)
     {
@@ -171,7 +171,7 @@ public partial class MainWindow : Window
         }
         AutorCaleInfo detailsUser = new AutorCaleInfo(songToPlay.autorUtworu, biblioteka);
         List<string> details = detailsUser.getInfo();
-        if (string.Compare(DetailsButton.Content.ToString(), "Pokaż szczegóły Autora") == 0)
+        if (string.Compare(DetailsButton.Content.ToString(), "Pokaż szczegóły") == 0)
         {
             autorHidName.Visibility = Visibility.Visible;
             autorHidSur.Visibility = Visibility.Visible;
@@ -181,7 +181,7 @@ public partial class MainWindow : Window
             autorNazwisko.Text = details[2];
             autorNarodowosc.Text = details[3];
             autorOpis.Text = details[4];
-            DetailsButton.Content = "Schowaj szczegóły Autora";
+            DetailsButton.Content = "Schowaj szczegóły";
         } else
         {
             AutorBezSzczegolow withoutDetails = (AutorBezSzczegolow)detailsUser.GetAutor();
@@ -194,7 +194,7 @@ public partial class MainWindow : Window
             autorNazwisko.Text = "";
             autorNarodowosc.Text = "";
             autorOpis.Text = "";
-            DetailsButton.Content = "Pokaż szczegóły Autora";
+            DetailsButton.Content = "Pokaż szczegóły";
         }
         
     }

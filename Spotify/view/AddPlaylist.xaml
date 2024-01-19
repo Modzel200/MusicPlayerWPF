@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Spotify.VIew"
         mc:Ignorable="d"
         Title="AddPlaylist" Height="200" Width="200"
-        Background="#121212">
+        Background="#191919">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
