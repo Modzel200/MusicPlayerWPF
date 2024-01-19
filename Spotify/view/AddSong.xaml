@@ -5,7 +5,60 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Spotify.view"
         mc:Ignorable="d"
-        Title="AddSong" Height="400" Width="300">
+        Title="AddSong" Height="400" Width="300" Background="#121212">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="BorderBrush" Value="#555555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#888888"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+
+
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="#333333"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#555555"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                            <ScrollViewer x:Name="ScrollViewer" Background="{TemplateBinding Background}">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -16,36 +69,52 @@
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock>Dodaj utwór</TextBlock>
+        
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold">Dodaj utwór</TextBlock>
+        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center">
         <TextBlock Grid.Row="1">Tytuł</TextBlock>
         <TextBox Grid.Row="1" Height="25" Width="200" Name="tytul"></TextBox>
+         </StackPanel>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <TextBlock >Autor utworu</TextBlock>
-            <ComboBox Height="25" Width="170" Name="autor" SelectionChanged="autor_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center">
+            <TextBlock  >Autor utworu</TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <ComboBox Height="25" Width="170" Name="autor" SelectionChanged="autor_SelectionChanged" RenderTransformOrigin="0.5,0.5">
+                        <ComboBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-0.142"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </ComboBox.RenderTransform>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
 
-                            <TextBlock Text="{Binding Path=pseudonim,StringFormat='Pseudo: {0}'}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <Button Height="30" Width="30" Click="AddAutor" Margin="5,0,0,0">
-                <Image  Source="/view/plus.png"></Image>
-            </Button>
-        </StackPanel>
-        
+                                    <TextBlock Text="{Binding Path=pseudonim,StringFormat='Pseudo: {0}'}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Height="30" Width="30" Click="AddAutor" Margin="5,0,0,0">
+                        <Image  Source="/view/plus.png"></Image>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+
         <!--<TextBox Grid.Row="2" Height="25" Width="200" Name="autor"></TextBox>-->
+        <StackPanel Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Center">
+            <TextBlock Grid.Row="3" >Rok wydania</TextBlock>
+            <TextBox Grid.Row="3" Height="25" Width="200" Name="rok"></TextBox>
+        </StackPanel>
 
-        <TextBlock Grid.Row="3" >Rok wydania</TextBlock>
-        <TextBox Grid.Row="3" Height="25" Width="200" Name="rok"></TextBox>
-
-        <StackPanel Grid.Row="4" Orientation="Horizontal">
+        <StackPanel Grid.Row="4" Orientation="Vertical" HorizontalAlignment="Center">
             <TextBlock>Ścieżka</TextBlock>
-            <TextBox Height="25" Width="170" Name="sciezka" Margin="5,0,0,0"/>
-            <Button Height="25" Width="50" Content="Wybierz plik" Click="SelectFileButton_Click" Margin="5,0,0,0"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Height="25" Width="150" Name="sciezka"/>
+            <Button Height="25" Width="50" Content="Plik" Click="SelectFileButton_Click"/>
+            </StackPanel>
         </StackPanel>
 
         <Button Grid.Row="5" Height="40" Width="100" Name="submit" Click="Submit_OnClick">Dodaj</Button>
