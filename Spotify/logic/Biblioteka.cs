@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using System.Windows;
 
 namespace Spotify.logic;
 
@@ -35,9 +36,14 @@ public class Biblioteka : Subject
         return listaPlaylist;
     }
 
-    public Playlista getPlaylista(int i)
+    public Playlista? getPlaylista(int i)
     {
-        return listaPlaylist[i];
+        var exists = listaPlaylist.ElementAtOrDefault(i) != null;
+        if (exists)
+        {
+            return listaPlaylist[i];
+        }
+        return null;
     }
     public List<Album> getAlbumy()
     {

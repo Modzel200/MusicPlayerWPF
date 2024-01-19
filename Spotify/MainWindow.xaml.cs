@@ -346,10 +346,18 @@ public partial class MainWindow : Window
     private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         ComboBoxItem typeItem = (ComboBoxItem)sortChange.SelectedItem;
-
+        if(typeItem == null)
+        {
+            return;
+        }
         if (typeItem.Content.ToString() == "Autor")
         {
             Playlista playlista = biblioteka.getPlaylista(playlistList.SelectedIndex);
+            if(playlista == null)
+            {
+                sortChange.SelectedIndex = -1;
+                return;
+            }
             context.SetStrategy(new AutorSort(),playlista.getLista());
             playlista.listaUtworow = context.Sort();
             UpdateUI();
@@ -357,6 +365,11 @@ public partial class MainWindow : Window
         if (typeItem.Content.ToString() == "Utwor")
         {
             Playlista playlista = biblioteka.getPlaylista(playlistList.SelectedIndex);
+            if (playlista == null)
+            {
+                sortChange.SelectedIndex = -1;
+                return;
+            }
             context.SetStrategy(new TitleSort(), playlista.getLista());
             playlista.listaUtworow = context.Sort();
             UpdateUI();
