@@ -88,10 +88,13 @@ public partial class MainWindow : Window
         AddPlaylist addPlaylist = new AddPlaylist(biblioteka);
         
         addPlaylist.Show();
-        foreach(Playlista playlista in biblioteka.getPlaylisty())
-        {
-            playlista.RegisterObserver(observer);
-        }
+        addPlaylist.Closed += AddPlaylist_Closed;
+    }
+
+    private void AddPlaylist_Closed(object sender, EventArgs e)
+    {
+        Playlista temp = biblioteka.getPlaylista(biblioteka.getPlaylisty().Count-1);
+        temp.RegisterObserver(observer);
     }
 
     private void RemovePlaylistButton_OnClick(object sender, RoutedEventArgs e)
