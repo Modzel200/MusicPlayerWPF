@@ -93,6 +93,6 @@ public class AutorCaleInfo : AutorDecorator
     }
     public override void setIndeks(int indeks)
     {
-        throw new NotImplementedException();
+        base.indeks = indeks;
     }
 }

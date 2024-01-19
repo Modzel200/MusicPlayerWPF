@@ -93,7 +93,8 @@ public partial class AddSong : Window
     private void AddAutor(object sender, RoutedEventArgs e)
     {
         AddAutor addAutor = new AddAutor(_biblioteka);
-        addAutor.Show();
+        addAutor.ShowDialog();
+        RefreshCombo();
     }
 
 

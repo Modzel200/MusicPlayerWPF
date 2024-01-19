@@ -141,7 +141,62 @@ public partial class MainWindow : Window
 
     private void loadSong(object sender, RoutedEventArgs e)
     {
+        if(songsList.SelectedIndex < 0)
+        {
+            return;
+        }
         songToPlay = playlist.getUtwor(songsList.SelectedIndex);
+        List<string> autorDoPokazania = songToPlay.autorUtworu.getInfo();
+        autorPseudo.Text = autorDoPokazania[0];
+        autorHidName.Visibility = Visibility.Hidden;
+        autorHidSur.Visibility = Visibility.Hidden;
+        autorHidNar.Visibility = Visibility.Hidden;
+        autorHidOpis.Visibility = Visibility.Hidden;
+        autorImie.Text = "";
+        autorNazwisko.Text = "";
+        autorNarodowosc.Text = "";
+        autorOpis.Text = "";
+        DetailsButton.Content = "Pokaż szczegóły Autora";
+    }
+    private void ShowDetailsAutor(object sender, RoutedEventArgs e)
+    {
+        if(songsList.SelectedIndex < 0)
+        {
+            return;
+        }
+        songToPlay = playlist.getUtwor(songsList.SelectedIndex);
+        if(songToPlay == null)
+        {
+            return;
+        }
+        AutorCaleInfo detailsUser = new AutorCaleInfo(songToPlay.autorUtworu, biblioteka);
+        List<string> details = detailsUser.getInfo();
+        if (string.Compare(DetailsButton.Content.ToString(), "Pokaż szczegóły Autora") == 0)
+        {
+            autorHidName.Visibility = Visibility.Visible;
+            autorHidSur.Visibility = Visibility.Visible;
+            autorHidNar.Visibility = Visibility.Visible;
+            autorHidOpis.Visibility = Visibility.Visible;
+            autorImie.Text = details[1];
+            autorNazwisko.Text = details[2];
+            autorNarodowosc.Text = details[3];
+            autorOpis.Text = details[4];
+            DetailsButton.Content = "Schowaj szczegóły Autora";
+        } else
+        {
+            AutorBezSzczegolow withoutDetails = (AutorBezSzczegolow)detailsUser.GetAutor();
+            autorPseudo.Text = withoutDetails.getInfo()[0];
+            autorHidName.Visibility = Visibility.Hidden;
+            autorHidSur.Visibility = Visibility.Hidden;
+            autorHidNar.Visibility = Visibility.Hidden;
+            autorHidOpis.Visibility = Visibility.Hidden;
+            autorImie.Text = "";
+            autorNazwisko.Text = "";
+            autorNarodowosc.Text = "";
+            autorOpis.Text = "";
+            DetailsButton.Content = "Pokaż szczegóły Autora";
+        }
+        
     }
 
     private void CreateNewSongButton_OnClick(object sender, RoutedEventArgs e)
@@ -155,12 +210,6 @@ public partial class MainWindow : Window
 
     private void PlayButton_OnClick(object sender, RoutedEventArgs e)
     {
-        AutorCaleInfo es = new AutorCaleInfo(biblioteka.autorzy[0], biblioteka);
-        List<string> asa = (List<string>)es.getInfo();
-        foreach (var elem in asa)
-        {
-            testing.Text += elem;
-        }
 
         if (isPlaying == false)
         {
