@@ -329,6 +329,13 @@ public partial class MainWindow : Window
         }
         if (index >= 0)
         {
+            if(biblioteka.getPlaylista(index) == null)
+            {
+                playlistList.SelectedIndex = -1;
+                songsList.SelectedIndex = -1;
+                songsList.Items.Clear();
+                return;
+            }
             songsTitle.Text = biblioteka.getPlaylista(index).getNazwa();
             songsList.Items.Clear();
             playlist = biblioteka.getPlaylista(index);

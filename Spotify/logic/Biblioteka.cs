@@ -7,16 +7,14 @@ public class Biblioteka : Subject
 {
     public static int iter;
     public List<Playlista> listaPlaylist { get; set; }
-    public List<Album> albumy { get; set; }
-    public List<Utwor> utwory { get; set; }
+    public List<Prototyp> albumyIUtwory { get; set; }
     public List<AutorBezSzczegolow> autorzy { get; set; }
     public List<AutorSzczegoly> autorzySzczegoly {  get; set; }
 
     private Biblioteka()
     {
         listaPlaylist = new List<Playlista>();
-        albumy = new List<Album>();
-        utwory = new List<Utwor>();
+        albumyIUtwory = new List<Prototyp>();
         autorzy = new List<AutorBezSzczegolow>();
         autorzySzczegoly = new List<AutorSzczegoly>();
         iter = 0;
@@ -47,12 +45,22 @@ public class Biblioteka : Subject
     }
     public List<Album> getAlbumy()
     {
-        return albumy;
+        List<Album> list = new List<Album>();
+        foreach (Album album in albumyIUtwory.OfType<Album>())
+        {
+            list.Add(album);
+        }
+        return list;
     }
 
     public List<Utwor> getUtwory()
     {
-        return utwory;
+        List<Utwor> list = new List<Utwor>();
+        foreach (Utwor utwor in albumyIUtwory.OfType<Utwor>())
+        {
+            list.Add(utwor);
+        }
+        return list;
     }
 
     public void addPlaylista(Playlista playlista)

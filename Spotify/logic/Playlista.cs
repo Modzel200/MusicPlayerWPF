@@ -88,17 +88,4 @@ public class Playlista : Subject
         }
         NotifyObservers();
     }
-    //public override Prototyp Clone()
-    //{
-    //    Playlista playlistaClone = (Playlista)MemberwiseClone();
-    //    playlistaClone.ilosc = this.ilosc;
-    //    playlistaClone.dlugosc = this.dlugosc;
-    //    playlistaClone.listaUtworow = new List<Utwor>(this.listaUtworow);
-    //    return playlistaClone;
-    //}
-
-    public void wyeksportuj()
-    {
-        //logika do napisania
-    }
 }
